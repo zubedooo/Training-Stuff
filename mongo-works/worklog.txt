@@ -1,0 +1,1934 @@
+Microsoft Windows [Version 10.0.17134.1184]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\zubpayma>mongoimport --db zub --collection testCollection --file C:\Users\zubpayma\Desktop\Sapient-Training-2020-Jan\mongo-works\db\mongo.json --jsonArray
+2020-01-30T09:05:32.744+0530    connected to: localhost
+2020-01-30T09:05:32.839+0530    imported 5 documents
+
+C:\Users\zubpayma>mongo
+MongoDB shell version v4.0.13
+connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("6a737fa6-33bc-444a-b73e-094aeff7aadf") }
+MongoDB server version: 4.0.13
+Server has startup warnings:
+2020-01-29T20:30:38.371-0700 I CONTROL  [initandlisten]
+2020-01-29T20:30:38.371-0700 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2020-01-29T20:30:38.372-0700 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2020-01-29T20:30:38.373-0700 I CONTROL  [initandlisten]
+2020-01-29T20:30:38.373-0700 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2020-01-29T20:30:38.374-0700 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server.
+2020-01-29T20:30:38.374-0700 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP
+2020-01-29T20:30:38.375-0700 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2020-01-29T20:30:38.375-0700 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2020-01-29T20:30:38.375-0700 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2020-01-29T20:30:38.376-0700 I CONTROL  [initandlisten]
+---
+Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+and anyone you share the URL with. MongoDB may use this information to make product
+improvements and to suggest MongoDB products and deployment options to you.
+
+To enable free monitoring, run the following command: db.enableFreeMonitoring()
+To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+
+> use zub
+switched to db zub
+> show collections
+testCollection
+> db.emps_finance
+zub.emps_finance
+> db.emps_finance.insert({"empid":1,"empsal":4000});
+WriteResult({ "nInserted" : 1 })
+> show collections
+emps_finance
+testCollection
+> db.testCollection.find().pretty()
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da1"),
+        "empid" : 1,
+        "empname" : "Zubin",
+        "empsal" : 5000,
+        "empmail" : "zubin@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da2"),
+        "empid" : 2,
+        "empname" : "Mayank",
+        "empsal" : 4500,
+        "empmail" : "mayank@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da3"),
+        "empid" : 3,
+        "empname" : "Daniel",
+        "empsal" : 6000,
+        "empmail" : "daniel@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da4"),
+        "empid" : 4,
+        "empname" : "Zaid",
+        "empsal" : 6500,
+        "empmail" : "zaid@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da5"),
+        "empid" : 5,
+        "empname" : "Siv",
+        "empsal" : 5200,
+        "empmail" : "siv@gmail.com"
+}
+> db.emps_finance.find().pretty()
+{
+        "_id" : ObjectId("5e324f78ec36814a8a3567a3"),
+        "empid" : 1,
+        "empsal" : 4000
+}
+> db.createCollection("capcol",{capped:true,size:1024, max:4})
+{ "ok" : 1 }
+> db
+zub
+> db.capcol.insert({food:"pizza"})
+WriteResult({ "nInserted" : 1 })
+> db.capcol.insert({food:"dosa"})
+WriteResult({ "nInserted" : 1 })
+> db.capcol.insert({food:"idly"})
+WriteResult({ "nInserted" : 1 })
+> db.capcol.insert({food:"burger"})
+WriteResult({ "nInserted" : 1 })
+> db.capcol.find()
+{ "_id" : ObjectId("5e32515bec36814a8a3567a4"), "food" : "pizza" }
+{ "_id" : ObjectId("5e32515bec36814a8a3567a5"), "food" : "dosa" }
+{ "_id" : ObjectId("5e32515bec36814a8a3567a6"), "food" : "idly" }
+{ "_id" : ObjectId("5e32515eec36814a8a3567a7"), "food" : "burger" }
+> db.capcol.insert({food:"Mango juice"})
+WriteResult({ "nInserted" : 1 })
+> db.capcol.find()
+{ "_id" : ObjectId("5e32515bec36814a8a3567a5"), "food" : "dosa" }
+{ "_id" : ObjectId("5e32515bec36814a8a3567a6"), "food" : "idly" }
+{ "_id" : ObjectId("5e32515eec36814a8a3567a7"), "food" : "burger" }
+{ "_id" : ObjectId("5e325171ec36814a8a3567a8"), "food" : "Mango juice" }
+> db.emps.find()
+> db.testCollection.find()
+{ "_id" : ObjectId("5e324f0487f3dd2112235da1"), "empid" : 1, "empname" : "Zubin", "empsal" : 5000, "empmail" : "zubin@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da2"), "empid" : 2, "empname" : "Mayank", "empsal" : 4500, "empmail" : "mayank@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da3"), "empid" : 3, "empname" : "Daniel", "empsal" : 6000, "empmail" : "daniel@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da4"), "empid" : 4, "empname" : "Zaid", "empsal" : 6500, "empmail" : "zaid@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da5"), "empid" : 5, "empname" : "Siv", "empsal" : 5200, "empmail" : "siv@gmail.com" }
+> db.testCollection.find({}, {_id:0})
+{ "empid" : 1, "empname" : "Zubin", "empsal" : 5000, "empmail" : "zubin@gmail.com" }
+{ "empid" : 2, "empname" : "Mayank", "empsal" : 4500, "empmail" : "mayank@gmail.com" }
+{ "empid" : 3, "empname" : "Daniel", "empsal" : 6000, "empmail" : "daniel@gmail.com" }
+{ "empid" : 4, "empname" : "Zaid", "empsal" : 6500, "empmail" : "zaid@gmail.com" }
+{ "empid" : 5, "empname" : "Siv", "empsal" : 5200, "empmail" : "siv@gmail.com" }
+> db.testCollection.find({empid:1}, {_id:0})
+{ "empid" : 1, "empname" : "Zubin", "empsal" : 5000, "empmail" : "zubin@gmail.com" }
+> db.testCollection.find({empsal:{$gt:6000}, {_id:0})
+...
+... ;
+...
+...
+> db.testCollection.find({empid:1}, {_id:0});
+{ "empid" : 1, "empname" : "Zubin", "empsal" : 5000, "empmail" : "zubin@gmail.com" }
+> db.testCollection.find({empsal:{$gt:6000}, {_id:0});
+...
+...
+>
+> db.testCollection.find({empsal:{$gt:6000}}, {_id:0});
+{ "empid" : 4, "empname" : "Zaid", "empsal" : 6500, "empmail" : "zaid@gmail.com" }
+> db.testCollection.find({_id:0}).sort({empname:-1}).skip(2).limit(4);
+>
+> db.testCollection.find({_id:0}).sort({empname:-1}).skip(2).limit(4);
+> db.testCollection.find({_id:0}).sort({empname:-1}).skip(2).limit(4)
+> db.testCollection.find({_id:0}).sort({empname:-1}).skip(2).limit(2)
+> db.testCollection.find({_id:0}).sort({empname:-1}).skip(1).limit(2)
+> db.testCollection.find({_id:0}).sort({empname:1}).skip(1).limit(2)
+> db.testCollection.find({_id:0}).sort().skip(1).limit(2)
+Error: error: {
+        "ok" : 0,
+        "errmsg" : "Failed to parse: sort: undefined. 'sort' field must be of BSON type object.",
+        "code" : 9,
+        "codeName" : "FailedToParse"
+}
+> db.testCollection.find({_id:0}).sort({empname:-1}).skip(1).limit(2)
+> db.testCollection.find({_id:0}).sort({empsal:-1}).skip(1).limit(2)
+> db.testCollection.find({_id:0}).sort({empname:-1}).skip(1).limit(2)
+> db.testCollection.update({empid:1},{$set:{empsal:8888}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.testCollection.find().pretty()
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da1"),
+        "empid" : 1,
+        "empname" : "Zubin",
+        "empsal" : 8888,
+        "empmail" : "zubin@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da2"),
+        "empid" : 2,
+        "empname" : "Mayank",
+        "empsal" : 4500,
+        "empmail" : "mayank@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da3"),
+        "empid" : 3,
+        "empname" : "Daniel",
+        "empsal" : 6000,
+        "empmail" : "daniel@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da4"),
+        "empid" : 4,
+        "empname" : "Zaid",
+        "empsal" : 6500,
+        "empmail" : "zaid@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da5"),
+        "empid" : 5,
+        "empname" : "Siv",
+        "empsal" : 5200,
+        "empmail" : "siv@gmail.com"
+}
+> db.testCollection.find({
+...     $or:[
+...         {empid:3},
+...         {empsal:{$gt:5000}}
+...     ]
+... });
+{ "_id" : ObjectId("5e324f0487f3dd2112235da1"), "empid" : 1, "empname" : "Zubin", "empsal" : 8888, "empmail" : "zubin@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da3"), "empid" : 3, "empname" : "Daniel", "empsal" : 6000, "empmail" : "daniel@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da4"), "empid" : 4, "empname" : "Zaid", "empsal" : 6500, "empmail" : "zaid@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da5"), "empid" : 5, "empname" : "Siv", "empsal" : 5200, "empmail" : "siv@gmail.com" }
+> db.testCollection.find({
+...     $or:[
+...         {empid:3},
+...         {empsal:{$gt:5000}}
+...     ]
+... },{_id:0,empsal:1,empemail:1});
+{ "empsal" : 8888 }
+{ "empsal" : 6000 }
+{ "empsal" : 6500 }
+{ "empsal" : 5200 }
+> db.testCollection.find({
+...     $or:[
+...         {empid:3},
+...         {empsal:{$gt:5000}}
+...     ]
+... },{_id:0,empsal:1,empmail:1});
+{ "empsal" : 8888, "empmail" : "zubin@gmail.com" }
+{ "empsal" : 6000, "empmail" : "daniel@gmail.com" }
+{ "empsal" : 6500, "empmail" : "zaid@gmail.com" }
+{ "empsal" : 5200, "empmail" : "siv@gmail.com" }
+> db.testCollection.find().sort({empsal:-1}).pretty()
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da1"),
+        "empid" : 1,
+        "empname" : "Zubin",
+        "empsal" : 8888,
+        "empmail" : "zubin@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da4"),
+        "empid" : 4,
+        "empname" : "Zaid",
+        "empsal" : 6500,
+        "empmail" : "zaid@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da3"),
+        "empid" : 3,
+        "empname" : "Daniel",
+        "empsal" : 6000,
+        "empmail" : "daniel@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da5"),
+        "empid" : 5,
+        "empname" : "Siv",
+        "empsal" : 5200,
+        "empmail" : "siv@gmail.com"
+}
+{
+        "_id" : ObjectId("5e324f0487f3dd2112235da2"),
+        "empid" : 2,
+        "empname" : "Mayank",
+        "empsal" : 4500,
+        "empmail" : "mayank@gmail.com"
+}
+> db.embed.insert({
+...     custid:101,
+...     name:{
+...         firstname:"Harry",
+...         lastname:"Potter"
+...     },
+...     address:{
+...         city:"Bengaluru",
+...         street:"Marathalli",
+...         state:"Karnataka",
+...         country:"IN"
+...     },
+...     income:4455
+... });
+WriteResult({ "nInserted" : 1 })
+> db.embed.insert({
+...     custid:102,
+...     name:{
+...         firstname:"Ron",
+...         lastname:"Weasley"
+...     },
+...     address:{
+...         city:"Bengaluru",
+...         street:"Mahadevapura",
+...         state:"Karnataka",
+...         country:"IN"
+...     },
+...     income:5555
+... });
+WriteResult({ "nInserted" : 1 })
+> db.embed.find()
+{ "_id" : ObjectId("5e3258ffec36814a8a3567a9"), "custid" : 101, "name" : { "firstname" : "Harry", "lastname" : "Potter" }, "address" : { "city" : "Bengaluru", "street" : "Marathalli", "state" : "Karnataka", "country" : "IN" }, "income" : 4455 }
+{ "_id" : ObjectId("5e325907ec36814a8a3567aa"), "custid" : 102, "name" : { "firstname" : "Ron", "lastname" : "Weasley" }, "address" : { "city" : "Bengaluru", "street" : "Mahadevapura", "state" : "Karnataka", "country" : "IN" }, "income" : 5555 }
+> db.embed.insert({
+...     custid:103,
+...     name:{
+...         firstname:"Manjunath",
+...         lastname:"Prasad"
+...     },
+...     address:{
+...         city:"Reston",
+...         street:"S BLVD",
+...         state:"Virginia",
+...         country:"USA"
+...     },
+...     income:5555
+... });
+WriteResult({ "nInserted" : 1 })
+> db.embed.find({"address.country":"IN"})
+{ "_id" : ObjectId("5e3258ffec36814a8a3567a9"), "custid" : 101, "name" : { "firstname" : "Harry", "lastname" : "Potter" }, "address" : { "city" : "Bengaluru", "street" : "Marathalli", "state" : "Karnataka", "country" : "IN" }, "income" : 4455 }
+{ "_id" : ObjectId("5e325907ec36814a8a3567aa"), "custid" : 102, "name" : { "firstname" : "Ron", "lastname" : "Weasley" }, "address" : { "city" : "Bengaluru", "street" : "Mahadevapura", "state" : "Karnataka", "country" : "IN" }, "income" : 5555 }
+> db.embed.find({"address.country":"USA"})
+{ "_id" : ObjectId("5e325969ec36814a8a3567ab"), "custid" : 103, "name" : { "firstname" : "Manjunath", "lastname" : "Prasad" }, "address" : { "city" : "Reston", "street" : "S BLVD", "state" : "Virginia", "country" : "USA" }, "income" : 5555 }
+> db.embed.find({"address.country":"USA"}).pretty()
+{
+        "_id" : ObjectId("5e325969ec36814a8a3567ab"),
+        "custid" : 103,
+        "name" : {
+                "firstname" : "Manjunath",
+                "lastname" : "Prasad"
+        },
+        "address" : {
+                "city" : "Reston",
+                "street" : "S BLVD",
+                "state" : "Virginia",
+                "country" : "USA"
+        },
+        "income" : 5555
+}
+> db.food.insert({name:"burger",cost:8.8, ratings:[6,7,8]})
+WriteResult({ "nInserted" : 1 })
+> db.food.insert({name:"idly",cost:3.2, ratings:[6,7,8,4]})
+WriteResult({ "nInserted" : 1 })
+> db.food.insert({name:"dosa",cost:4.8, ratings:[5]})
+WriteResult({ "nInserted" : 1 })
+> db.food.insert({name:"Juice",cost:1.8, ratings:[8,9,10]})
+WriteResult({ "nInserted" : 1 })
+>
+>
+>
+> db.food.find()
+{ "_id" : ObjectId("5e325aabec36814a8a3567ac"), "name" : "burger", "cost" : 8.8, "ratings" : [ 6, 7, 8 ] }
+{ "_id" : ObjectId("5e325aabec36814a8a3567ad"), "name" : "idly", "cost" : 3.2, "ratings" : [ 6, 7, 8, 4 ] }
+{ "_id" : ObjectId("5e325aabec36814a8a3567ae"), "name" : "dosa", "cost" : 4.8, "ratings" : [ 5 ] }
+{ "_id" : ObjectId("5e325aadec36814a8a3567af"), "name" : "Juice", "cost" : 1.8, "ratings" : [ 8, 9, 10 ] }
+> db.food.find({ratings:[5]})
+{ "_id" : ObjectId("5e325aabec36814a8a3567ae"), "name" : "dosa", "cost" : 4.8, "ratings" : [ 5 ] }
+> db.food.find({ratings:[6,7,9]})
+> db.food.find({ratings.0:6})
+2020-01-30T09:57:41.451+0530 E QUERY    [js] SyntaxError: missing : after property id @(shell):1:21
+> db.food.find({ratings.0":6})
+2020-01-30T09:57:47.723+0530 E QUERY    [js] SyntaxError: missing : after property id @(shell):1:21
+> db.food.find({"ratings.0":6})
+{ "_id" : ObjectId("5e325aabec36814a8a3567ac"), "name" : "burger", "cost" : 8.8, "ratings" : [ 6, 7, 8 ] }
+{ "_id" : ObjectId("5e325aabec36814a8a3567ad"), "name" : "idly", "cost" : 3.2, "ratings" : [ 6, 7, 8, 4 ] }
+> db.food.find({ratings0:6})
+> db.food.find({ratings:6})
+{ "_id" : ObjectId("5e325aabec36814a8a3567ac"), "name" : "burger", "cost" : 8.8, "ratings" : [ 6, 7, 8 ] }
+{ "_id" : ObjectId("5e325aabec36814a8a3567ad"), "name" : "idly", "cost" : 3.2, "ratings" : [ 6, 7, 8, 4 ] }
+> db.food.find({ratings:8})
+{ "_id" : ObjectId("5e325aabec36814a8a3567ac"), "name" : "burger", "cost" : 8.8, "ratings" : [ 6, 7, 8 ] }
+{ "_id" : ObjectId("5e325aabec36814a8a3567ad"), "name" : "idly", "cost" : 3.2, "ratings" : [ 6, 7, 8, 4 ] }
+{ "_id" : ObjectId("5e325aadec36814a8a3567af"), "name" : "Juice", "cost" : 1.8, "ratings" : [ 8, 9, 10 ] }
+> db.food.find({ratings:$elemMatch:{$gt:7}})
+2020-01-30T09:59:57.994+0530 E QUERY    [js] SyntaxError: missing } after property list @(shell):1:32
+> db.food.find({ratings:{$elemMatch:{$gt:7}}})
+{ "_id" : ObjectId("5e325aabec36814a8a3567ac"), "name" : "burger", "cost" : 8.8, "ratings" : [ 6, 7, 8 ] }
+{ "_id" : ObjectId("5e325aabec36814a8a3567ad"), "name" : "idly", "cost" : 3.2, "ratings" : [ 6, 7, 8, 4 ] }
+{ "_id" : ObjectId("5e325aadec36814a8a3567af"), "name" : "Juice", "cost" : 1.8, "ratings" : [ 8, 9, 10 ] }
+> db.food.find({cost:{$elemMatch:{$lt:4}}})
+> db.food.find({cost:{$lt:4}})
+{ "_id" : ObjectId("5e325aabec36814a8a3567ad"), "name" : "idly", "cost" : 3.2, "ratings" : [ 6, 7, 8, 4 ] }
+{ "_id" : ObjectId("5e325aadec36814a8a3567af"), "name" : "Juice", "cost" : 1.8, "ratings" : [ 8, 9, 10 ] }
+> db.testCollection.find()
+{ "_id" : ObjectId("5e324f0487f3dd2112235da1"), "empid" : 1, "empname" : "Zubin", "empsal" : 8888, "empmail" : "zubin@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da2"), "empid" : 2, "empname" : "Mayank", "empsal" : 4500, "empmail" : "mayank@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da3"), "empid" : 3, "empname" : "Daniel", "empsal" : 6000, "empmail" : "daniel@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da4"), "empid" : 4, "empname" : "Zaid", "empsal" : 6500, "empmail" : "zaid@gmail.com" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da5"), "empid" : 5, "empname" : "Siv", "empsal" : 5200, "empmail" : "siv@gmail.com" }
+> db.testCollection.update({country:$exists:false},{$set:{country:"IN"}},{multi:true})
+2020-01-30T10:10:46.770+0530 E QUERY    [js] SyntaxError: missing } after property list @(shell):1:41
+> db.testCollection.update({country:{$exists:false}},{$set:{country:"IN"}},{multi:true})
+WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 5 })
+> db.testCollection.find()
+{ "_id" : ObjectId("5e324f0487f3dd2112235da1"), "empid" : 1, "empname" : "Zubin", "empsal" : 8888, "empmail" : "zubin@gmail.com", "country" : "IN" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da2"), "empid" : 2, "empname" : "Mayank", "empsal" : 4500, "empmail" : "mayank@gmail.com", "country" : "IN" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da3"), "empid" : 3, "empname" : "Daniel", "empsal" : 6000, "empmail" : "daniel@gmail.com", "country" : "IN" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da4"), "empid" : 4, "empname" : "Zaid", "empsal" : 6500, "empmail" : "zaid@gmail.com", "country" : "IN" }
+{ "_id" : ObjectId("5e324f0487f3dd2112235da5"), "empid" : 5, "empname" : "Siv", "empsal" : 5200, "empmail" : "siv@gmail.com", "country" : "IN" }
+> db.testCollection.update({empname:"Sachin",{$set:{empsal:8000 , empmail:"sachin@gmail.com"}},{upsert:true})
+... ;
+...
+...
+>
+> db.testCollection.update({empname:"Sachin",{$set:{empsal:8000 , empmail:"sachin@gmail.com"},{upsert:true}})
+...
+...
+>
+> db.testCollection.update({empname:"Sachin"},{$set:{empsal:8000 , empmail:"sachin@gmail.com"}},{upsert:true})
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 1,
+        "nModified" : 0,
+        "_id" : ObjectId("5e325ff387f3dd2112235e76")
+})
+> show collections
+capcol
+embed
+emps_finance
+food
+pop
+testCollection
+> db.pop.findOne()
+{
+        "_id" : "01011",
+        "city" : "CHESTER",
+        "loc" : [
+                -72.988761,
+                42.279421
+        ],
+        "pop" : 1688,
+        "state" : "MA"
+}
+> db.pop.find({pop:{$gt:1200}})
+{ "_id" : "01011", "city" : "CHESTER", "loc" : [ -72.988761, 42.279421 ], "pop" : 1688, "state" : "MA" }
+{ "_id" : "01013", "city" : "CHICOPEE", "loc" : [ -72.607962, 42.162046 ], "pop" : 23396, "state" : "MA" }
+{ "_id" : "01020", "city" : "CHICOPEE", "loc" : [ -72.576142, 42.176443 ], "pop" : 31495, "state" : "MA" }
+{ "_id" : "01022", "city" : "WESTOVER AFB", "loc" : [ -72.558657, 42.196672 ], "pop" : 1764, "state" : "MA" }
+{ "_id" : "01026", "city" : "CUMMINGTON", "loc" : [ -72.905767, 42.435296 ], "pop" : 1484, "state" : "MA" }
+{ "_id" : "01028", "city" : "EAST LONGMEADOW", "loc" : [ -72.505565, 42.067203 ], "pop" : 13367, "state" : "MA" }
+{ "_id" : "01030", "city" : "FEEDING HILLS", "loc" : [ -72.675077, 42.07182 ], "pop" : 11985, "state" : "MA" }
+{ "_id" : "01027", "city" : "MOUNT TOM", "loc" : [ -72.679921, 42.264319 ], "pop" : 16864, "state" : "MA" }
+{ "_id" : "01031", "city" : "GILBERTVILLE", "loc" : [ -72.198585, 42.332194 ], "pop" : 2385, "state" : "MA" }
+{ "_id" : "01005", "city" : "BARRE", "loc" : [ -72.108354, 42.409698 ], "pop" : 4546, "state" : "MA" }
+{ "_id" : "01033", "city" : "GRANBY", "loc" : [ -72.520001, 42.255704 ], "pop" : 5526, "state" : "MA" }
+{ "_id" : "01034", "city" : "TOLLAND", "loc" : [ -72.908793, 42.070234 ], "pop" : 1652, "state" : "MA" }
+{ "_id" : "01035", "city" : "HADLEY", "loc" : [ -72.571499, 42.36062 ], "pop" : 4231, "state" : "MA" }
+{ "_id" : "01036", "city" : "HAMPDEN", "loc" : [ -72.431823, 42.064756 ], "pop" : 4709, "state" : "MA" }
+{ "_id" : "01038", "city" : "HATFIELD", "loc" : [ -72.616735, 42.38439 ], "pop" : 3184, "state" : "MA" }
+{ "_id" : "01039", "city" : "HAYDENVILLE", "loc" : [ -72.703178, 42.381799 ], "pop" : 1387, "state" : "MA" }
+{ "_id" : "01040", "city" : "HOLYOKE", "loc" : [ -72.626193, 42.202007 ], "pop" : 43704, "state" : "MA" }
+{ "_id" : "01050", "city" : "HUNTINGTON", "loc" : [ -72.873341, 42.265301 ], "pop" : 2084, "state" : "MA" }
+{ "_id" : "01002", "city" : "CUSHMAN", "loc" : [ -72.51565, 42.377017 ], "pop" : 36963, "state" : "MA" }
+{ "_id" : "01010", "city" : "BRIMFIELD", "loc" : [ -72.188455, 42.116543 ], "pop" : 3706, "state" : "MA" }
+Type "it" for more
+> it
+{ "_id" : "01008", "city" : "BLANDFORD", "loc" : [ -72.936114, 42.182949 ], "pop" : 1240, "state" : "MA" }
+{ "_id" : "01007", "city" : "BELCHERTOWN", "loc" : [ -72.410953, 42.275103 ], "pop" : 10579, "state" : "MA" }
+{ "_id" : "01001", "city" : "AGAWAM", "loc" : [ -72.622739, 42.070206 ], "pop" : 15338, "state" : "MA" }
+{ "_id" : "01054", "city" : "LEVERETT", "loc" : [ -72.499334, 42.46823 ], "pop" : 1748, "state" : "MA" }
+{ "_id" : "01056", "city" : "LUDLOW", "loc" : [ -72.471012, 42.172823 ], "pop" : 18820, "state" : "MA" }
+{ "_id" : "01068", "city" : "OAKHAM", "loc" : [ -72.051265, 42.348033 ], "pop" : 1503, "state" : "MA" }
+{ "_id" : "01053", "city" : "LEEDS", "loc" : [ -72.703403, 42.354292 ], "pop" : 1350, "state" : "MA" }
+{ "_id" : "01069", "city" : "PALMER", "loc" : [ -72.328785, 42.176233 ], "pop" : 9778, "state" : "MA" }
+{ "_id" : "01057", "city" : "MONSON", "loc" : [ -72.319634, 42.101017 ], "pop" : 8194, "state" : "MA" }
+{ "_id" : "01060", "city" : "FLORENCE", "loc" : [ -72.654245, 42.324662 ], "pop" : 27939, "state" : "MA" }
+{ "_id" : "01072", "city" : "SHUTESBURY", "loc" : [ -72.421342, 42.481968 ], "pop" : 1533, "state" : "MA" }
+{ "_id" : "01073", "city" : "SOUTHAMPTON", "loc" : [ -72.719381, 42.224697 ], "pop" : 4478, "state" : "MA" }
+{ "_id" : "01075", "city" : "SOUTH HADLEY", "loc" : [ -72.581137, 42.237537 ], "pop" : 16699, "state" : "MA" }
+{ "_id" : "01077", "city" : "SOUTHWICK", "loc" : [ -72.770588, 42.051099 ], "pop" : 7667, "state" : "MA" }
+{ "_id" : "01082", "city" : "WARE", "loc" : [ -72.258285, 42.261831 ], "pop" : 9808, "state" : "MA" }
+{ "_id" : "01096", "city" : "WILLIAMSBURG", "loc" : [ -72.777989, 42.408522 ], "pop" : 2295, "state" : "MA" }
+{ "_id" : "01095", "city" : "WILBRAHAM", "loc" : [ -72.446415, 42.124506 ], "pop" : 12635, "state" : "MA" }
+{ "_id" : "01103", "city" : "SPRINGFIELD", "loc" : [ -72.588735, 42.1029 ], "pop" : 2323, "state" : "MA" }
+{ "_id" : "01104", "city" : "SPRINGFIELD", "loc" : [ -72.577769, 42.128848 ], "pop" : 22115, "state" : "MA" }
+{ "_id" : "01107", "city" : "SPRINGFIELD", "loc" : [ -72.606544, 42.117907 ], "pop" : 12739, "state" : "MA" }
+Type "it" for more
+> it
+{ "_id" : "01105", "city" : "SPRINGFIELD", "loc" : [ -72.578312, 42.099931 ], "pop" : 14970, "state" : "MA" }
+{ "_id" : "01108", "city" : "SPRINGFIELD", "loc" : [ -72.558432, 42.085314 ], "pop" : 25519, "state" : "MA" }
+{ "_id" : "01109", "city" : "SPRINGFIELD", "loc" : [ -72.554349, 42.114455 ], "pop" : 32635, "state" : "MA" }
+{ "_id" : "01106", "city" : "LONGMEADOW", "loc" : [ -72.5676, 42.050658 ], "pop" : 15688, "state" : "MA" }
+{ "_id" : "01118", "city" : "SPRINGFIELD", "loc" : [ -72.527445, 42.092937 ], "pop" : 14618, "state" : "MA" }
+{ "_id" : "01085", "city" : "MONTGOMERY", "loc" : [ -72.754318, 42.129484 ], "pop" : 40117, "state" : "MA" }
+{ "_id" : "01151", "city" : "INDIAN ORCHARD", "loc" : [ -72.505048, 42.153225 ], "pop" : 8702, "state" : "MA" }
+{ "_id" : "01080", "city" : "THREE RIVERS", "loc" : [ -72.362352, 42.181894 ], "pop" : 2425, "state" : "MA" }
+{ "_id" : "01201", "city" : "PITTSFIELD", "loc" : [ -73.247088, 42.453086 ], "pop" : 50655, "state" : "MA" }
+{ "_id" : "01220", "city" : "ADAMS", "loc" : [ -73.117225, 42.622319 ], "pop" : 9901, "state" : "MA" }
+{ "_id" : "01129", "city" : "SPRINGFIELD", "loc" : [ -72.487622, 42.122263 ], "pop" : 6831, "state" : "MA" }
+{ "_id" : "01225", "city" : "CHESHIRE", "loc" : [ -73.157964, 42.561059 ], "pop" : 3094, "state" : "MA" }
+{ "_id" : "01226", "city" : "DALTON", "loc" : [ -73.160259, 42.475046 ], "pop" : 7357, "state" : "MA" }
+{ "_id" : "01230", "city" : "GREAT BARRINGTON", "loc" : [ -73.36065, 42.195922 ], "pop" : 10603, "state" : "MA" }
+{ "_id" : "01235", "city" : "PERU", "loc" : [ -73.092433, 42.434604 ], "pop" : 2559, "state" : "MA" }
+{ "_id" : "01237", "city" : "HANCOCK", "loc" : [ -73.248737, 42.541961 ], "pop" : 2328, "state" : "MA" }
+{ "_id" : "01238", "city" : "LEE", "loc" : [ -73.231696, 42.298994 ], "pop" : 6916, "state" : "MA" }
+{ "_id" : "01089", "city" : "WEST SPRINGFIELD", "loc" : [ -72.641109, 42.115066 ], "pop" : 27537, "state" : "MA" }
+{ "_id" : "01240", "city" : "LENOX", "loc" : [ -73.271322, 42.364241 ], "pop" : 5001, "state" : "MA" }
+{ "_id" : "01081", "city" : "WALES", "loc" : [ -72.204592, 42.062734 ], "pop" : 1732, "state" : "MA" }
+Type "it" for more
+> it
+{ "_id" : "01092", "city" : "WEST WARREN", "loc" : [ -72.203639, 42.20734 ], "pop" : 4441, "state" : "MA" }
+{ "_id" : "01119", "city" : "SPRINGFIELD", "loc" : [ -72.51211, 42.12473 ], "pop" : 13040, "state" : "MA" }
+{ "_id" : "01128", "city" : "SPRINGFIELD", "loc" : [ -72.488903, 42.094397 ], "pop" : 3272, "state" : "MA" }
+{ "_id" : "01262", "city" : "STOCKBRIDGE", "loc" : [ -73.322263, 42.30104 ], "pop" : 2200, "state" : "MA" }
+{ "_id" : "01267", "city" : "WILLIAMSTOWN", "loc" : [ -73.20364, 42.708883 ], "pop" : 8220, "state" : "MA" }
+{ "_id" : "01247", "city" : "CLARKSBURG", "loc" : [ -73.10999, 42.69865 ], "pop" : 19054, "state" : "MA" }
+{ "_id" : "01330", "city" : "ASHFIELD", "loc" : [ -72.810998, 42.523207 ], "pop" : 1535, "state" : "MA" }
+{ "_id" : "01337", "city" : "LEYDEN", "loc" : [ -72.563439, 42.683784 ], "pop" : 2426, "state" : "MA" }
+{ "_id" : "01331", "city" : "NEW SALEM", "loc" : [ -72.214644, 42.592065 ], "pop" : 14077, "state" : "MA" }
+{ "_id" : "01301", "city" : "LEYDEN", "loc" : [ -72.601847, 42.601222 ], "pop" : 18968, "state" : "MA" }
+{ "_id" : "01257", "city" : "SHEFFIELD", "loc" : [ -73.361091, 42.100102 ], "pop" : 1839, "state" : "MA" }
+{ "_id" : "01339", "city" : "HAWLEY", "loc" : [ -72.880162, 42.621802 ], "pop" : 1325, "state" : "MA" }
+{ "_id" : "01351", "city" : "MONTAGUE", "loc" : [ -72.532837, 42.542864 ], "pop" : 1699, "state" : "MA" }
+{ "_id" : "01360", "city" : "NORTHFIELD", "loc" : [ -72.450995, 42.688705 ], "pop" : 2829, "state" : "MA" }
+{ "_id" : "01349", "city" : "MILLERS FALLS", "loc" : [ -72.494626, 42.576206 ], "pop" : 1893, "state" : "MA" }
+{ "_id" : "01364", "city" : "NEW SALEM", "loc" : [ -72.305867, 42.591231 ], "pop" : 8544, "state" : "MA" }
+{ "_id" : "01373", "city" : "SOUTH DEERFIELD", "loc" : [ -72.615268, 42.475616 ], "pop" : 5118, "state" : "MA" }
+{ "_id" : "01370", "city" : "SHELBURNE FALLS", "loc" : [ -72.739059, 42.602203 ], "pop" : 4525, "state" : "MA" }
+{ "_id" : "01340", "city" : "COLRAIN", "loc" : [ -72.726508, 42.67905 ], "pop" : 2050, "state" : "MA" }
+{ "_id" : "01376", "city" : "TURNERS FALLS", "loc" : [ -72.54701, 42.606521 ], "pop" : 7100, "state" : "MA" }
+Type "it" for more
+> it
+{ "_id" : "01375", "city" : "SUNDERLAND", "loc" : [ -72.567569, 42.453947 ], "pop" : 3399, "state" : "MA" }
+{ "_id" : "01342", "city" : "DEERFIELD", "loc" : [ -72.607234, 42.540636 ], "pop" : 1281, "state" : "MA" }
+{ "_id" : "01430", "city" : "ASHBURNHAM", "loc" : [ -71.92666, 42.649614 ], "pop" : 5433, "state" : "MA" }
+{ "_id" : "01420", "city" : "FITCHBURG", "loc" : [ -71.803133, 42.579563 ], "pop" : 41194, "state" : "MA" }
+{ "_id" : "01436", "city" : "BALDWINVILLE", "loc" : [ -72.064647, 42.593568 ], "pop" : 4386, "state" : "MA" }
+{ "_id" : "01431", "city" : "ASHBY", "loc" : [ -71.817369, 42.674462 ], "pop" : 2649, "state" : "MA" }
+{ "_id" : "01452", "city" : "HUBBARDSTON", "loc" : [ -72.001159, 42.486538 ], "pop" : 2797, "state" : "MA" }
+{ "_id" : "01451", "city" : "HARVARD", "loc" : [ -71.575293, 42.498565 ], "pop" : 4445, "state" : "MA" }
+{ "_id" : "01460", "city" : "LITTLETON", "loc" : [ -71.487667, 42.540132 ], "pop" : 7066, "state" : "MA" }
+{ "_id" : "01453", "city" : "LEOMINSTER", "loc" : [ -71.756308, 42.52744 ], "pop" : 38145, "state" : "MA" }
+{ "_id" : "01462", "city" : "LUNENBURG", "loc" : [ -71.726642, 42.58843 ], "pop" : 9117, "state" : "MA" }
+{ "_id" : "01463", "city" : "PEPPERELL", "loc" : [ -71.593392, 42.668888 ], "pop" : 10178, "state" : "MA" }
+{ "_id" : "01341", "city" : "CONWAY", "loc" : [ -72.702473, 42.513832 ], "pop" : 1524, "state" : "MA" }
+{ "_id" : "01464", "city" : "SHIRLEY CENTER", "loc" : [ -71.646444, 42.558653 ], "pop" : 6118, "state" : "MA" }
+{ "_id" : "01468", "city" : "TEMPLETON", "loc" : [ -72.064971, 42.545976 ], "pop" : 2058, "state" : "MA" }
+{ "_id" : "01473", "city" : "WESTMINSTER", "loc" : [ -71.909599, 42.548319 ], "pop" : 6191, "state" : "MA" }
+{ "_id" : "01474", "city" : "W TOWNSEND", "loc" : [ -71.74057, 42.670404 ], "pop" : 2452, "state" : "MA" }
+{ "_id" : "01469", "city" : "TOWNSEND", "loc" : [ -71.689646, 42.652511 ], "pop" : 6112, "state" : "MA" }
+{ "_id" : "01475", "city" : "WINCHENDON", "loc" : [ -72.047524, 42.678943 ], "pop" : 8805, "state" : "MA" }
+{ "_id" : "01433", "city" : "FT DEVENS", "loc" : [ -71.621819, 42.532416 ], "pop" : 8480, "state" : "MA" }
+Type "it" for more
+> db.pop.find({pop:{$gt:1200}}).count()
+20324
+> db.pop.find({pop:{$gt:1200}}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "zub.pop",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "pop" : {
+                                "$gt" : 1200
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "pop" : {
+                                        "$gt" : 1200
+                                }
+                        },
+                        "direction" : "forward"
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 20324,
+                "executionTimeMillis" : 13,
+                "totalKeysExamined" : 0,
+                "totalDocsExamined" : 29353,
+                "executionStages" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "pop" : {
+                                        "$gt" : 1200
+                                }
+                        },
+                        "nReturned" : 20324,
+                        "executionTimeMillisEstimate" : 10,
+                        "works" : 29355,
+                        "advanced" : 20324,
+                        "needTime" : 9030,
+                        "needYield" : 0,
+                        "saveState" : 229,
+                        "restoreState" : 229,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "direction" : "forward",
+                        "docsExamined" : 29353
+                }
+        },
+        "serverInfo" : {
+                "host" : "WKWIN9088618",
+                "port" : 27017,
+                "version" : "4.0.13",
+                "gitVersion" : "bda366f0b0e432ca143bc41da54d8732bd8d03c0"
+        },
+        "ok" : 1
+}
+> db.pop.find({pop:{$gt:1200}}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "zub.pop",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "pop" : {
+                                "$gt" : 1200
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "pop" : {
+                                        "$gt" : 1200
+                                }
+                        },
+                        "direction" : "forward"
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 20324,
+                "executionTimeMillis" : 13,
+                "totalKeysExamined" : 0,
+                "totalDocsExamined" : 29353,
+                "executionStages" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "pop" : {
+                                        "$gt" : 1200
+                                }
+                        },
+                        "nReturned" : 20324,
+                        "executionTimeMillisEstimate" : 0,
+                        "works" : 29355,
+                        "advanced" : 20324,
+                        "needTime" : 9030,
+                        "needYield" : 0,
+                        "saveState" : 229,
+                        "restoreState" : 229,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "direction" : "forward",
+                        "docsExamined" : 29353
+                }
+        },
+        "serverInfo" : {
+                "host" : "WKWIN9088618",
+                "port" : 27017,
+                "version" : "4.0.13",
+                "gitVersion" : "bda366f0b0e432ca143bc41da54d8732bd8d03c0"
+        },
+        "ok" : 1
+}
+> db.pop.createIndex({pop:1})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "ok" : 1
+}
+> show collections
+capcol
+embed
+emps_finance
+food
+pop
+testCollection
+> db.pop.find({pop:{$gt:1200}}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "zub.pop",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "pop" : {
+                                "$gt" : 1200
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "pop" : 1
+                                },
+                                "indexName" : "pop_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(1200.0, inf.0]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 20324,
+                "executionTimeMillis" : 30,
+                "totalKeysExamined" : 20324,
+                "totalDocsExamined" : 20324,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "nReturned" : 20324,
+                        "executionTimeMillisEstimate" : 22,
+                        "works" : 20325,
+                        "advanced" : 20324,
+                        "needTime" : 0,
+                        "needYield" : 0,
+                        "saveState" : 159,
+                        "restoreState" : 159,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "docsExamined" : 20324,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 20324,
+                                "executionTimeMillisEstimate" : 0,
+                                "works" : 20325,
+                                "advanced" : 20324,
+                                "needTime" : 0,
+                                "needYield" : 0,
+                                "saveState" : 159,
+                                "restoreState" : 159,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "pop" : 1
+                                },
+                                "indexName" : "pop_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(1200.0, inf.0]"
+                                        ]
+                                },
+                                "keysExamined" : 20324,
+                                "seeks" : 1,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "WKWIN9088618",
+                "port" : 27017,
+                "version" : "4.0.13",
+                "gitVersion" : "bda366f0b0e432ca143bc41da54d8732bd8d03c0"
+        },
+        "ok" : 1
+}
+> db.pop.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "pop" : 1
+                },
+                "name" : "pop_1",
+                "ns" : "zub.pop"
+        }
+]
+> db.emps_finance.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.emps_finance"
+        }
+]
+> db.pop.stats()
+{
+        "ns" : "zub.pop",
+        "size" : 2774134,
+        "count" : 29353,
+        "avgObjSize" : 94,
+        "storageSize" : 1454080,
+        "capped" : false,
+        "wiredTiger" : {
+                "metadata" : {
+                        "formatVersion" : 1
+                },
+                "creationString" : "access_pattern_hint=none,allocation_size=4KB,app_metadata=(formatVersion=1),assert=(commit_timestamp=none,read_timestamp=none),block_allocation=best,block_compressor=snappy,cache_resident=false,checksum=on,colgroups=,collator=,columns=,dictionary=0,encryption=(keyid=,name=),exclusive=false,extractor=,format=btree,huffman_key=,huffman_value=,ignore_in_memory_cache_size=false,immutable=false,internal_item_max=0,internal_key_max=0,internal_key_truncate=true,internal_page_max=4KB,key_format=q,key_gap=10,leaf_item_max=0,leaf_key_max=0,leaf_page_max=32KB,leaf_value_max=64MB,log=(enabled=true),lsm=(auto_throttle=true,bloom=true,bloom_bit_count=16,bloom_config=,bloom_hash_count=8,bloom_oldest=false,chunk_count_limit=0,chunk_max=5GB,chunk_size=10MB,merge_custom=(prefix=,start_generation=0,suffix=),merge_max=15,merge_min=0),memory_page_image_max=0,memory_page_max=10m,os_cache_dirty_max=0,os_cache_max=0,prefix_compression=false,prefix_compression_min=4,source=,split_deepen_min_child=0,split_deepen_per_child=0,split_pct=90,type=file,value_format=u",
+                "type" : "file",
+                "uri" : "statistics:table:collection-10--7374824096176742047",
+                "LSM" : {
+                        "bloom filter false positives" : 0,
+                        "bloom filter hits" : 0,
+                        "bloom filter misses" : 0,
+                        "bloom filter pages evicted from cache" : 0,
+                        "bloom filter pages read into cache" : 0,
+                        "bloom filters in the LSM tree" : 0,
+                        "chunks in the LSM tree" : 0,
+                        "highest merge generation in the LSM tree" : 0,
+                        "queries that could have benefited from a Bloom filter that did not exist" : 0,
+                        "sleep for LSM checkpoint throttle" : 0,
+                        "sleep for LSM merge throttle" : 0,
+                        "total size of bloom filters" : 0
+                },
+                "block-manager" : {
+                        "allocations requiring file extension" : 105,
+                        "blocks allocated" : 105,
+                        "blocks freed" : 0,
+                        "checkpoint size" : 1441792,
+                        "file allocation unit size" : 4096,
+                        "file bytes available for reuse" : 0,
+                        "file magic number" : 120897,
+                        "file major version number" : 1,
+                        "file size in bytes" : 1454080,
+                        "minor version number" : 0
+                },
+                "btree" : {
+                        "btree checkpoint generation" : 173,
+                        "column-store fixed-size leaf pages" : 0,
+                        "column-store internal pages" : 0,
+                        "column-store variable-size RLE encoded values" : 0,
+                        "column-store variable-size deleted values" : 0,
+                        "column-store variable-size leaf pages" : 0,
+                        "fixed-record size" : 0,
+                        "maximum internal page key size" : 368,
+                        "maximum internal page size" : 4096,
+                        "maximum leaf page key size" : 2867,
+                        "maximum leaf page size" : 32768,
+                        "maximum leaf page value size" : 67108864,
+                        "maximum tree depth" : 3,
+                        "number of key/value pairs" : 0,
+                        "overflow pages" : 0,
+                        "pages rewritten by compaction" : 0,
+                        "row-store internal pages" : 0,
+                        "row-store leaf pages" : 0
+                },
+                "cache" : {
+                        "bytes currently in the cache" : 5081328,
+                        "bytes dirty in the cache cumulative" : 839,
+                        "bytes read into cache" : 0,
+                        "bytes written from cache" : 2947231,
+                        "checkpoint blocked page eviction" : 0,
+                        "data source pages selected for eviction unable to be evicted" : 0,
+                        "eviction walk passes of a file" : 0,
+                        "eviction walk target pages histogram - 0-9" : 0,
+                        "eviction walk target pages histogram - 10-31" : 0,
+                        "eviction walk target pages histogram - 128 and higher" : 0,
+                        "eviction walk target pages histogram - 32-63" : 0,
+                        "eviction walk target pages histogram - 64-128" : 0,
+                        "eviction walks abandoned" : 0,
+                        "eviction walks gave up because they restarted their walk twice" : 0,
+                        "eviction walks gave up because they saw too many pages and found no candidates" : 0,
+                        "eviction walks gave up because they saw too many pages and found too few candidates" : 0,
+                        "eviction walks reached end of tree" : 0,
+                        "eviction walks started from root of tree" : 0,
+                        "eviction walks started from saved location in tree" : 0,
+                        "hazard pointer blocked page eviction" : 0,
+                        "in-memory page passed criteria to be split" : 0,
+                        "in-memory page splits" : 0,
+                        "internal pages evicted" : 0,
+                        "internal pages split during eviction" : 0,
+                        "leaf pages split during eviction" : 0,
+                        "modified pages evicted" : 0,
+                        "overflow pages read into cache" : 0,
+                        "page split during eviction deepened the tree" : 0,
+                        "page written requiring cache overflow records" : 0,
+                        "pages read into cache" : 0,
+                        "pages read into cache after truncate" : 1,
+                        "pages read into cache after truncate in prepare state" : 0,
+                        "pages read into cache requiring cache overflow entries" : 0,
+                        "pages requested from the cache" : 50601,
+                        "pages seen by eviction walk" : 0,
+                        "pages written from cache" : 104,
+                        "pages written requiring in-memory restoration" : 0,
+                        "tracked dirty bytes in the cache" : 0,
+                        "unmodified pages evicted" : 0
+                },
+                "cache_walk" : {
+                        "Average difference between current eviction generation when the page was last considered" : 0,
+                        "Average on-disk page image size seen" : 0,
+                        "Average time in cache for pages that have been visited by the eviction server" : 0,
+                        "Average time in cache for pages that have not been visited by the eviction server" : 0,
+                        "Clean pages currently in cache" : 0,
+                        "Current eviction generation" : 0,
+                        "Dirty pages currently in cache" : 0,
+                        "Entries in the root page" : 0,
+                        "Internal pages currently in cache" : 0,
+                        "Leaf pages currently in cache" : 0,
+                        "Maximum difference between current eviction generation when the page was last considered" : 0,
+                        "Maximum page size seen" : 0,
+                        "Minimum on-disk page image size seen" : 0,
+                        "Number of pages never visited by eviction server" : 0,
+                        "On-disk page image sizes smaller than a single allocation unit" : 0,
+                        "Pages created in memory and never written" : 0,
+                        "Pages currently queued for eviction" : 0,
+                        "Pages that could not be queued for eviction" : 0,
+                        "Refs skipped during cache traversal" : 0,
+                        "Size of the root page" : 0,
+                        "Total number of pages currently in cache" : 0
+                },
+                "compression" : {
+                        "compressed pages read" : 0,
+                        "compressed pages written" : 103,
+                        "page written failed to compress" : 0,
+                        "page written was too small to compress" : 1
+                },
+                "cursor" : {
+                        "bulk-loaded cursor-insert calls" : 0,
+                        "close calls that result in cache" : 0,
+                        "create calls" : 2,
+                        "cursor operation restarted" : 0,
+                        "cursor-insert key and value bytes inserted" : 2853619,
+                        "cursor-remove key bytes removed" : 0,
+                        "cursor-update value bytes updated" : 0,
+                        "cursors reused from cache" : 35,
+                        "insert calls" : 29353,
+                        "modify calls" : 0,
+                        "next calls" : 117544,
+                        "open cursor count" : 0,
+                        "prev calls" : 1,
+                        "remove calls" : 0,
+                        "reserve calls" : 0,
+                        "reset calls" : 1593,
+                        "search calls" : 20324,
+                        "search near calls" : 918,
+                        "truncate calls" : 0,
+                        "update calls" : 0
+                },
+                "reconciliation" : {
+                        "dictionary matches" : 0,
+                        "fast-path pages deleted" : 0,
+                        "internal page key bytes discarded using suffix compression" : 206,
+                        "internal page multi-block writes" : 0,
+                        "internal-page overflow keys" : 0,
+                        "leaf page key bytes discarded using prefix compression" : 0,
+                        "leaf page multi-block writes" : 1,
+                        "leaf-page overflow keys" : 0,
+                        "maximum blocks required for a page" : 1,
+                        "overflow values written" : 0,
+                        "page checksum matches" : 0,
+                        "page reconciliation calls" : 2,
+                        "page reconciliation calls for eviction" : 0,
+                        "pages deleted" : 0
+                },
+                "session" : {
+                        "object compaction" : 0
+                },
+                "transaction" : {
+                        "update conflicts" : 0
+                }
+        },
+        "nindexes" : 2,
+        "totalIndexSize" : 565248,
+        "indexSizes" : {
+                "_id_" : 315392,
+                "pop_1" : 249856
+        },
+        "ok" : 1
+}
+> db.pop.findOne()
+{
+        "_id" : "01011",
+        "city" : "CHESTER",
+        "loc" : [
+                -72.988761,
+                42.279421
+        ],
+        "pop" : 1688,
+        "state" : "MA"
+}
+> db.pop.createIndex({pop:1 , city:1})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 2,
+        "numIndexesAfter" : 3,
+        "ok" : 1
+}
+> db.pop.createIndex({pop:1 , city:-1})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 3,
+        "numIndexesAfter" : 4,
+        "ok" : 1
+}
+> db.pop.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "pop" : 1
+                },
+                "name" : "pop_1",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "pop" : 1,
+                        "city" : 1
+                },
+                "name" : "pop_1_city_1",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "pop" : 1,
+                        "city" : -1
+                },
+                "name" : "pop_1_city_-1",
+                "ns" : "zub.pop"
+        }
+]
+> db.pop.find({pop:{$gt:4000}. city:"CHESTER"}).explain("executionStats")
+2020-01-30T11:58:34.013+0530 E QUERY    [js] SyntaxError: missing } after property list @(shell):1:33
+> db.pop.find({pop:{$gt:4000}. city:"CHESTER"})
+2020-01-30T11:59:07.029+0530 E QUERY    [js] SyntaxError: missing } after property list @(shell):1:33
+> db.pop.find({pop:{$gt:4000. city:"CHESTER"})
+...
+...
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ;
+>
+>
+>
+>
+>
+>
+>
+> db.pop.find({pop:{$gt:4000}, city:"CHESTER"})
+{ "_id" : "21619", "city" : "CHESTER", "loc" : [ -76.284183, 38.958296 ], "pop" : 4199, "state" : "MD" }
+{ "_id" : "26034", "city" : "CHESTER", "loc" : [ -80.558439, 40.598109 ], "pop" : 5966, "state" : "WV" }
+{ "_id" : "07930", "city" : "CHESTER", "loc" : [ -74.677649, 40.789193 ], "pop" : 6635, "state" : "NJ" }
+{ "_id" : "10918", "city" : "CHESTER", "loc" : [ -74.265116, 41.355381 ], "pop" : 9196, "state" : "NY" }
+{ "_id" : "62233", "city" : "CHESTER", "loc" : [ -89.821807, 37.918822 ], "pop" : 9436, "state" : "IL" }
+{ "_id" : "29706", "city" : "CHESTER", "loc" : [ -81.21856, 34.714897 ], "pop" : 21920, "state" : "SC" }
+{ "_id" : "23831", "city" : "CHESTER", "loc" : [ -77.41557, 37.342934 ], "pop" : 24788, "state" : "VA" }
+{ "_id" : "19013", "city" : "CHESTER", "loc" : [ -75.374687, 39.849817 ], "pop" : 49144, "state" : "PA" }
+> db.pop.find({pop:{$gt:4000}, city:"CHESTER"}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "zub.pop",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "city" : {
+                                                "$eq" : "CHESTER"
+                                        }
+                                },
+                                {
+                                        "pop" : {
+                                                "$gt" : 4000
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : -1
+                                },
+                                "indexName" : "pop_1_city_-1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [
+                        {
+                                "stage" : "FETCH",
+                                "inputStage" : {
+                                        "stage" : "IXSCAN",
+                                        "keyPattern" : {
+                                                "pop" : 1,
+                                                "city" : 1
+                                        },
+                                        "indexName" : "pop_1_city_1",
+                                        "isMultiKey" : false,
+                                        "multiKeyPaths" : {
+                                                "pop" : [ ],
+                                                "city" : [ ]
+                                        },
+                                        "isUnique" : false,
+                                        "isSparse" : false,
+                                        "isPartial" : false,
+                                        "indexVersion" : 2,
+                                        "direction" : "forward",
+                                        "indexBounds" : {
+                                                "pop" : [
+                                                        "(4000.0, inf.0]"
+                                                ],
+                                                "city" : [
+                                                        "[\"CHESTER\", \"CHESTER\"]"
+                                                ]
+                                        }
+                                }
+                        },
+                        {
+                                "stage" : "FETCH",
+                                "filter" : {
+                                        "city" : {
+                                                "$eq" : "CHESTER"
+                                        }
+                                },
+                                "inputStage" : {
+                                        "stage" : "IXSCAN",
+                                        "keyPattern" : {
+                                                "pop" : 1
+                                        },
+                                        "indexName" : "pop_1",
+                                        "isMultiKey" : false,
+                                        "multiKeyPaths" : {
+                                                "pop" : [ ]
+                                        },
+                                        "isUnique" : false,
+                                        "isSparse" : false,
+                                        "isPartial" : false,
+                                        "indexVersion" : 2,
+                                        "direction" : "forward",
+                                        "indexBounds" : {
+                                                "pop" : [
+                                                        "(4000.0, inf.0]"
+                                                ]
+                                        }
+                                }
+                        }
+                ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 8,
+                "executionTimeMillis" : 54,
+                "totalKeysExamined" : 10642,
+                "totalDocsExamined" : 8,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "nReturned" : 8,
+                        "executionTimeMillisEstimate" : 11,
+                        "works" : 10643,
+                        "advanced" : 8,
+                        "needTime" : 10634,
+                        "needYield" : 0,
+                        "saveState" : 241,
+                        "restoreState" : 241,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "docsExamined" : 8,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 8,
+                                "executionTimeMillisEstimate" : 11,
+                                "works" : 10643,
+                                "advanced" : 8,
+                                "needTime" : 10634,
+                                "needYield" : 0,
+                                "saveState" : 241,
+                                "restoreState" : 241,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : -1
+                                },
+                                "indexName" : "pop_1_city_-1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                },
+                                "keysExamined" : 10642,
+                                "seeks" : 10635,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "WKWIN9088618",
+                "port" : 27017,
+                "version" : "4.0.13",
+                "gitVersion" : "bda366f0b0e432ca143bc41da54d8732bd8d03c0"
+        },
+        "ok" : 1
+}
+> db.pop.find({pop:{$gt:4000}, city:"CHESTER"}).hint({pop:1 , city:-1}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "zub.pop",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "city" : {
+                                                "$eq" : "CHESTER"
+                                        }
+                                },
+                                {
+                                        "pop" : {
+                                                "$gt" : 4000
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : -1
+                                },
+                                "indexName" : "pop_1_city_-1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 8,
+                "executionTimeMillis" : 20,
+                "totalKeysExamined" : 10642,
+                "totalDocsExamined" : 8,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "nReturned" : 8,
+                        "executionTimeMillisEstimate" : 11,
+                        "works" : 10643,
+                        "advanced" : 8,
+                        "needTime" : 10634,
+                        "needYield" : 0,
+                        "saveState" : 83,
+                        "restoreState" : 83,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "docsExamined" : 8,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 8,
+                                "executionTimeMillisEstimate" : 11,
+                                "works" : 10643,
+                                "advanced" : 8,
+                                "needTime" : 10634,
+                                "needYield" : 0,
+                                "saveState" : 83,
+                                "restoreState" : 83,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : -1
+                                },
+                                "indexName" : "pop_1_city_-1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                },
+                                "keysExamined" : 10642,
+                                "seeks" : 10635,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "WKWIN9088618",
+                "port" : 27017,
+                "version" : "4.0.13",
+                "gitVersion" : "bda366f0b0e432ca143bc41da54d8732bd8d03c0"
+        },
+        "ok" : 1
+}
+> db.pop.find({pop:{$gt:4000}, city:"CHESTER"}).hint({pop:1 , city:1}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "zub.pop",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "city" : {
+                                                "$eq" : "CHESTER"
+                                        }
+                                },
+                                {
+                                        "pop" : {
+                                                "$gt" : 4000
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : 1
+                                },
+                                "indexName" : "pop_1_city_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 8,
+                "executionTimeMillis" : 19,
+                "totalKeysExamined" : 10642,
+                "totalDocsExamined" : 8,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "nReturned" : 8,
+                        "executionTimeMillisEstimate" : 11,
+                        "works" : 10643,
+                        "advanced" : 8,
+                        "needTime" : 10634,
+                        "needYield" : 0,
+                        "saveState" : 83,
+                        "restoreState" : 83,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "docsExamined" : 8,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 8,
+                                "executionTimeMillisEstimate" : 11,
+                                "works" : 10643,
+                                "advanced" : 8,
+                                "needTime" : 10634,
+                                "needYield" : 0,
+                                "saveState" : 83,
+                                "restoreState" : 83,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : 1
+                                },
+                                "indexName" : "pop_1_city_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                },
+                                "keysExamined" : 10642,
+                                "seeks" : 10635,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "WKWIN9088618",
+                "port" : 27017,
+                "version" : "4.0.13",
+                "gitVersion" : "bda366f0b0e432ca143bc41da54d8732bd8d03c0"
+        },
+        "ok" : 1
+}
+> db.pop.find({pop:{$gt:4000}, city:"CHESTER"}).hint({pop:1 , city:1}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "zub.pop",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "$and" : [
+                                {
+                                        "city" : {
+                                                "$eq" : "CHESTER"
+                                        }
+                                },
+                                {
+                                        "pop" : {
+                                                "$gt" : 4000
+                                        }
+                                }
+                        ]
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : 1
+                                },
+                                "indexName" : "pop_1_city_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 8,
+                "executionTimeMillis" : 19,
+                "totalKeysExamined" : 10642,
+                "totalDocsExamined" : 8,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "nReturned" : 8,
+                        "executionTimeMillisEstimate" : 11,
+                        "works" : 10643,
+                        "advanced" : 8,
+                        "needTime" : 10634,
+                        "needYield" : 0,
+                        "saveState" : 83,
+                        "restoreState" : 83,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "docsExamined" : 8,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 8,
+                                "executionTimeMillisEstimate" : 11,
+                                "works" : 10643,
+                                "advanced" : 8,
+                                "needTime" : 10634,
+                                "needYield" : 0,
+                                "saveState" : 83,
+                                "restoreState" : 83,
+                                "isEOF" : 1,
+                                "invalidates" : 0,
+                                "keyPattern" : {
+                                        "pop" : 1,
+                                        "city" : 1
+                                },
+                                "indexName" : "pop_1_city_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "pop" : [ ],
+                                        "city" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "pop" : [
+                                                "(4000.0, inf.0]"
+                                        ],
+                                        "city" : [
+                                                "[\"CHESTER\", \"CHESTER\"]"
+                                        ]
+                                },
+                                "keysExamined" : 10642,
+                                "seeks" : 10635,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0,
+                                "seenInvalidated" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "WKWIN9088618",
+                "port" : 27017,
+                "version" : "4.0.13",
+                "gitVersion" : "bda366f0b0e432ca143bc41da54d8732bd8d03c0"
+        },
+        "ok" : 1
+}
+> var i=0
+> while(i<=1000000){
+...     db.emps_finance.insert({ "_id" : "98019", "city" : "DUVALL", "loc" : [ -121.936906, 47.724987 ], "pop" : 7866, "state" : "WA" })
+...     i=i+1
+... }
+1000001
+> db.marks.insert({name:"Sharath"});
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({name:"Pawan",marks:77});
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({name:"Preethi",marks:80});
+WriteResult({ "nInserted" : 1 })
+> db.marks.insert({name:"Mayank",marks:83});
+WriteResult({ "nInserted" : 1 })
+> db.marks.find()
+{ "_id" : ObjectId("5e329602ec36814a8a3567b0"), "name" : "Sharath" }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b1"), "name" : "Pawan", "marks" : 77 }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b2"), "name" : "Preethi", "marks" : 80 }
+{ "_id" : ObjectId("5e329605ec36814a8a3567b3"), "name" : "Mayank", "marks" : 83 }
+> db.marks.find({marks:{$lt:82}})
+{ "_id" : ObjectId("5e329603ec36814a8a3567b1"), "name" : "Pawan", "marks" : 77 }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b2"), "name" : "Preethi", "marks" : 80 }
+> db.marks.find().sort({marks:1})
+{ "_id" : ObjectId("5e329602ec36814a8a3567b0"), "name" : "Sharath" }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b1"), "name" : "Pawan", "marks" : 77 }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b2"), "name" : "Preethi", "marks" : 80 }
+{ "_id" : ObjectId("5e329605ec36814a8a3567b3"), "name" : "Mayank", "marks" : 83 }
+> db.marks.createIndex({marks:1}, {sparse:true})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "ok" : 1
+}
+> db.marks.find().sort({marks:1})
+{ "_id" : ObjectId("5e329602ec36814a8a3567b0"), "name" : "Sharath" }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b1"), "name" : "Pawan", "marks" : 77 }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b2"), "name" : "Preethi", "marks" : 80 }
+{ "_id" : ObjectId("5e329605ec36814a8a3567b3"), "name" : "Mayank", "marks" : 83 }
+> db.marks.find().sort({marks:1}).hint({marks:1})
+{ "_id" : ObjectId("5e329603ec36814a8a3567b1"), "name" : "Pawan", "marks" : 77 }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b2"), "name" : "Preethi", "marks" : 80 }
+{ "_id" : ObjectId("5e329605ec36814a8a3567b3"), "name" : "Mayank", "marks" : 83 }
+> db.marks.find().sort({marks:1})
+{ "_id" : ObjectId("5e329602ec36814a8a3567b0"), "name" : "Sharath" }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b1"), "name" : "Pawan", "marks" : 77 }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b2"), "name" : "Preethi", "marks" : 80 }
+{ "_id" : ObjectId("5e329605ec36814a8a3567b3"), "name" : "Mayank", "marks" : 83 }
+> db.marks.find().sort({marks:1}).hint({marks:1})
+{ "_id" : ObjectId("5e329603ec36814a8a3567b1"), "name" : "Pawan", "marks" : 77 }
+{ "_id" : ObjectId("5e329603ec36814a8a3567b2"), "name" : "Preethi", "marks" : 80 }
+{ "_id" : ObjectId("5e329605ec36814a8a3567b3"), "name" : "Mayank", "marks" : 83 }
+>> db.pop.find({loc:{$near:[72,40]}}).limit(20)
+Error: error: {
+        "ok" : 0,
+        "errmsg" : "error processing query: ns=zub.pop limit=20Tree: GEONEAR  field=loc maxdist=1.79769e+308 isNearSphere=0\nSort: {}\nProj: {}\n planner returned error: unable to find index for $geoNear query",
+        "code" : 2,
+        "codeName" : "BadValue"
+}
+> db.pop.createIndex({loc:'2d', city:1})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 4,
+        "numIndexesAfter" : 5,
+        "ok" : 1
+}
+> db.pop.find({loc:{$near:[72,40]}}).limit(20)
+{ "_id" : "04631", "city" : "EASTPORT", "loc" : [ -67.00739, 44.919966 ], "pop" : 2514, "state" : "ME" }
+{ "_id" : "04652", "city" : "LUBEC", "loc" : [ -67.046016, 44.834772 ], "pop" : 2349, "state" : "ME" }
+{ "_id" : "04667", "city" : "PERRY", "loc" : [ -67.092882, 44.988824 ], "pop" : 781, "state" : "ME" }
+{ "_id" : "04671", "city" : "ROBBINSTON", "loc" : [ -67.143301, 45.067007 ], "pop" : 495, "state" : "ME" }
+{ "_id" : "04666", "city" : "PEMBROKE", "loc" : [ -67.200204, 44.965396 ], "pop" : 1151, "state" : "ME" }
+{ "_id" : "04628", "city" : "DENNYSVILLE", "loc" : [ -67.224431, 44.896105 ], "pop" : 684, "state" : "ME" }
+{ "_id" : "04626", "city" : "CUTLER", "loc" : [ -67.249869, 44.67531 ], "pop" : 779, "state" : "ME" }
+{ "_id" : "04619", "city" : "CALAIS", "loc" : [ -67.26408, 45.171478 ], "pop" : 3963, "state" : "ME" }
+{ "_id" : "04630", "city" : "EAST MACHIAS", "loc" : [ -67.382066, 44.742362 ], "pop" : 1574, "state" : "ME" }
+{ "_id" : "04618", "city" : "BUCKS HARBOR", "loc" : [ -67.396382, 44.624762 ], "pop" : 402, "state" : "ME" }
+{ "_id" : "04657", "city" : "MEDDYBEMPS", "loc" : [ -67.382852, 45.019306 ], "pop" : 242, "state" : "ME" }
+{ "_id" : "04655", "city" : "MACHIASPORT", "loc" : [ -67.407277, 44.682039 ], "pop" : 602, "state" : "ME" }
+{ "_id" : "04694", "city" : "WOODLAND", "loc" : [ -67.417519, 45.133234 ], "pop" : 2909, "state" : "ME" }
+{ "_id" : "04654", "city" : "MACHIAS", "loc" : [ -67.481996, 44.72154 ], "pop" : 3766, "state" : "ME" }
+{ "_id" : "04491", "city" : "VANCEBORO", "loc" : [ -67.463419, 45.558761 ], "pop" : 217, "state" : "ME" }
+{ "_id" : "04648", "city" : "JONESBORO", "loc" : [ -67.577692, 44.658153 ], "pop" : 585, "state" : "ME" }
+{ "_id" : "04611", "city" : "BEALS", "loc" : [ -67.605554, 44.512967 ], "pop" : 667, "state" : "ME" }
+{ "_id" : "04649", "city" : "JONESPORT", "loc" : [ -67.604403, 44.550936 ], "pop" : 1520, "state" : "ME" }
+{ "_id" : "04668", "city" : "PRINCETON", "loc" : [ -67.600826, 45.213091 ], "pop" : 1918, "state" : "ME" }
+{ "_id" : "04492", "city" : "WAITE", "loc" : [ -67.642812, 45.357741 ], "pop" : 233, "state" : "ME" }
+> db.sentence.insert({"words":"dog"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"dog cat"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"cat dog"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"dog tree cat running"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"its always good to have a dog"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"dogs and cats play "});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"cat kills rat"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"cat is cute"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.insert({"words":"dog is snouser"});
+WriteResult({ "nInserted" : 1 })
+> db.sentence.createIndex({'words':'text'})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "ok" : 1
+}
+> db.sentence.find({$text:{$search:'snouser.'}})
+{ "_id" : ObjectId("5e329a85ec36814a8a3567bc"), "words" : "dog is snouser" }
+> db.sentence.find({$text:{$search:'some dogs '}})
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b4"), "words" : "dog" }
+{ "_id" : ObjectId("5e329a85ec36814a8a3567bc"), "words" : "dog is snouser" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b6"), "words" : "cat dog" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b5"), "words" : "dog cat" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b9"), "words" : "dogs and cats play " }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b8"), "words" : "its always good to have a dog" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b7"), "words" : "dog tree cat running" }
+> db.sentence.find({$text:{$search:'cute dogs '}})
+{ "_id" : ObjectId("5e329a83ec36814a8a3567bb"), "words" : "cat is cute" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b4"), "words" : "dog" }
+{ "_id" : ObjectId("5e329a85ec36814a8a3567bc"), "words" : "dog is snouser" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b6"), "words" : "cat dog" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b5"), "words" : "dog cat" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b9"), "words" : "dogs and cats play " }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b8"), "words" : "its always good to have a dog" }
+{ "_id" : ObjectId("5e329a83ec36814a8a3567b7"), "words" : "dog tree cat running" }
+> db.getCollectionNames().forEach(function(collection) {
+...  indexes = db[collection].getIndexes();
+...  print("Indexes for " + collection + ":");
+...  printjson(indexes);
+... });
+Indexes for capcol:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.capcol"
+        }
+]
+Indexes for embed:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.embed"
+        }
+]
+Indexes for emps_finance:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.emps_finance"
+        }
+]
+Indexes for food:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.food"
+        }
+]
+Indexes for marks:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.marks"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "marks" : 1
+                },
+                "name" : "marks_1",
+                "ns" : "zub.marks",
+                "sparse" : true
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "loc" : "2d",
+                        "city" : 1
+                },
+                "name" : "loc_2d_city_1",
+                "ns" : "zub.marks"
+        }
+]
+Indexes for pop:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "pop" : 1
+                },
+                "name" : "pop_1",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "pop" : 1,
+                        "city" : 1
+                },
+                "name" : "pop_1_city_1",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "pop" : 1,
+                        "city" : -1
+                },
+                "name" : "pop_1_city_-1",
+                "ns" : "zub.pop"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "loc" : "2d",
+                        "city" : 1
+                },
+                "name" : "loc_2d_city_1",
+                "ns" : "zub.pop"
+        }
+]
+Indexes for sentence:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.sentence"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "_fts" : "text",
+                        "_ftsx" : 1
+                },
+                "name" : "words_text",
+                "ns" : "zub.sentence",
+                "weights" : {
+                        "words" : 1
+                },
+                "default_language" : "english",
+                "language_override" : "language",
+                "textIndexVersion" : 3
+        }
+]
+Indexes for testCollection:
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_",
+                "ns" : "zub.testCollection"
+        }
+]

@@ -1,0 +1,206 @@
+var itr = db.testCollection.find()
+
+while(itr.hasNext()){
+    var temp = itr.next();
+    print(temp.empid)
+}
+
+db.createCollection("capcol",{capped:true,size:1024, max:4})
+
+db.capcol.insert({food:"pizza"})
+db.capcol.insert({food:"dosa"})
+db.capcol.insert({food:"idly"})
+db.capcol.insert({food:"burger"})
+
+db.capcol.insert({food:"Mango juice"}) //upon doing so we will not get pizza as result, as max is 4.
+
+
+db.testCollection.find({}, {_id:0})
+
+db.testCollection.find({empid:1}, {_id:0});
+
+db.testCollection.find({empsal:{$gt:6000}}, {_id:0});
+
+db.testCollection.find({_id:0}).sort({empname:-1}).skip(2).limit(4);
+
+db.testCollection.update({empid:1},{$set:{empsal:8888}})
+
+-- and clause
+db.testCollection.find({empid:1, empsal:{$gt:5000}},{_id:0})
+
+-- or clause
+db.testCollection.find({
+    $or:[
+        {empid:3},
+        {empsal:{$gt:5000}}
+    ]
+});
+
+db.testCollection.find({
+    $or:[
+        {empid:3},
+        {empsal:{$gt:5000}}
+    ]
+},{_id:0,empsal:1,empmail:1});
+
+db.embed.insert({
+    custid:101,
+    name:{
+        firstname:"Harry",
+        lastname:"Potter"
+    },
+    address:{
+        city:"Bengaluru",
+        street:"Marathalli",
+        state:"Karnataka",
+        country:"IN"
+    },
+    income:4455
+});
+
+db.embed.insert({
+    custid:102,
+    name:{
+        firstname:"Ron",
+        lastname:"Weasley"
+    },
+    address:{
+        city:"Bengaluru",
+        street:"Mahadevapura",
+        state:"Karnataka",
+        country:"IN"
+    },
+    income:5555
+});
+
+db.embed.insert({
+    custid:103,
+    name:{
+        firstname:"Manjunath",
+        lastname:"Prasad"
+    },
+    address:{
+        city:"Reston",
+        street:"S BLVD",
+        state:"Virginia",
+        country:"USA"
+    },
+    income:5555
+});
+
+db.embed.find({"address.country":"IN"})
+
+
+db.food.insert({name:"burger",cost:8.8, ratings:[6,7,8]})
+db.food.insert({name:"idly",cost:3.2, ratings:[6,7,8,4]})
+db.food.insert({name:"dosa",cost:4.8, ratings:[5]})
+db.food.insert({name:"Juice",cost:1.8, ratings:[8,9,10]})
+
+
+db.food.find({ratings:[5]})
+db.food.find({ratings:[6,7,8]})
+db.food.find({ratings:[6,7,9]}) //won't work
+db.food.find({"ratings.0:6"})
+db.food.find({ratings:6}) //anywhere match
+db.food.find({ratings:{$elemMatch:{$gt:7}}})
+db.food.find({cost:{$lt:4}})
+
+db.testCollection.update({country:{$exists:false}},{$set:{country:"IN"}},{multi:true})
+
+db.testCollection.update({empname:"Sachin"},{$set:{empsal:8000 , empmail:"sachin@gmail.com"}},{upsert:true})
+
+
+----------------------------------
+Indexing. 
+Increases speed of query, 
+trie algo for trees, 3 are given below
+x-fast, y-fast (telecom, as they prefer C and semi conductor devices) and z-fast (but not that important)
+Mongo joined hands with WiredTiger, who follows Trie methodology.
+
+Aggregation
+
+db.pop.find({pop:{$gt:1200}})
+db.pop.find({pop:{$gt:1200}}).count()
+db.pop.find({pop:{$gt:1200}}).explain("executionStats")
+
+db.pop.createIndex({pop:1})
+
+Indexing is never fruitful if you have a hugh amount of data and we experienced this hands on.
+
+db.pop.getIndexes()
+db.pop.stats()
+db.pop.findOne()
+
+db.pop.createIndex({pop:1 , city:1})
+db.pop.createIndex({pop:1 , city:-1})
+db.pop.find({pop:{$gt:4000}, city:"CHESTER"}).explain("executionStats")
+db.pop.find({pop:{$gt:4000}, city:"CHESTER"}).hint({pop:1 , city:-1}).explain("executionStats")
+
+DataModel talk, Splitwise thought process. Making an idea on the spot.
+
+
+----sparse Index
+db.marks.insert({name:"Sharath"});
+db.marks.insert({name:"Pawan",marks:77});
+db.marks.insert({name:"Preethi",marks:80});
+db.marks.insert({name:"Mayank",marks:83});
+
+db.marks.find({marks:{$lt:82}})
+db.marks.find().sort({marks:1})
+db.marks.createIndex({marks:1}, {sparse:true})
+db.marks.find().sort({marks:1}).hint({marks:1})
+db.pop.find({loc:{$near:[72,40]}}).limit(20)
+db.pop.createIndex({loc:'2d', city:1})
+db.pop.find({loc:{$near:[72,40]}}).limit(20)
+
+db.sentence.insert({"words":"dog"});
+db.sentence.insert({"words":"dog cat"});
+db.sentence.insert({"words":"cat dog"});
+db.sentence.insert({"words":"dog tree cat running"});
+db.sentence.insert({"words":"its always good to have a dog"});
+db.sentence.insert({"words":"dogs and cats play "});
+db.sentence.insert({"words":"cat kills rat"});
+db.sentence.insert({"words":"cat is cute"});
+db.sentence.insert({"words":"dog is snouser"});
+
+db.sentence.createIndex({'words':'text'})
+
+db.sentence.find({$text:{$search:'snouser.'}})
+db.sentence.find({$text:{$search:'some dogs '}})
+db.sentence.find({$text:{$search:'cute dogs '}})
+
+NOTE: textindex gives closest match. that is why we have adopted the above methods
+
+//Below code gets all indexes from all collections in the DB
+db.getCollectionNames().forEach(function(collection) {
+ indexes = db[collection].getIndexes();
+ print("Indexes for " + collection + ":");
+ printjson(indexes);
+});
+
+Spoke more about Aggregation,
+Main reason why mongo came into the scene is Map-Reduce Implementation
+Pros
+– Like other aggregation operations, map-reduce can specify a
+query condition to select the input documents as well as sort
+and limit the results.
+Cons
+– map-reduce is less efficient and more complex than the
+aggregation pipeline. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
