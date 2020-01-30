@@ -1,0 +1,1061 @@
+Microsoft Windows [Version 10.0.17134.1184]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\zubpayma>psql
+psql: FATAL:  role "zubpayma" does not exist
+
+C:\Users\zubpayma>psql -U postgres -h localhost
+psql (10.6)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \l
+                                                 List of databases
+   Name    |  Owner   | Encoding |          Collate           |           Ctype            |   Access privileges
+-----------+----------+----------+----------------------------+----------------------------+-----------------------
+ postgres  | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ template0 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+(3 rows)
+
+
+postgres=# create database zubdb
+postgres-# ;
+CREATE DATABASE
+postgres=# \l
+                                                 List of databases
+   Name    |  Owner   | Encoding |          Collate           |           Ctype            |   Access privileges
+-----------+----------+----------+----------------------------+----------------------------+-----------------------
+ postgres  | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ template0 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+ zubdb     | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+(4 rows)
+
+
+postgres=# \c zubdb
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+You are now connected to database "zubdb" as user "postgres".
+zubdb=# ]d
+zubdb-# \d
+Did not find any relations.
+zubdb-# create table dept(
+zubdb(# deptid int primary key not null,
+zubdb(# dname varchar(30),
+zubdb(# dloc varchar (40)
+zubdb(# );
+ERROR:  syntax error at or near "]"
+LINE 1: ]d
+        ^
+zubdb=# create table dept(
+zubdb(# deptid int primary key not null,
+zubdb(# dname varchar(30),
+zubdb(# dloc varchar (40)
+zubdb(# );
+CREATE TABLE
+zubdb=# \d
+        List of relations
+ Schema | Name | Type  |  Owner
+--------+------+-------+----------
+ public | dept | table | postgres
+(1 row)
+
+
+zubdb=# \d dept
+                       Table "public.dept"
+ Column |         Type          | Collation | Nullable | Default
+--------+-----------------------+-----------+----------+---------
+ deptid | integer               |           | not null |
+ dname  | character varying(30) |           |          |
+ dloc   | character varying(40) |           |          |
+Indexes:
+    "dept_pkey" PRIMARY KEY, btree (deptid)
+
+
+zubdb=# select version();
+                                                version
+--------------------------------------------------------------------------------------------------------
+ PostgreSQL 10.6 on x86_64-pc-mingw64, compiled by gcc.exe (Rev5, Built by MSYS2 project) 4.9.2, 64-bit
+(1 row)
+
+
+zubdb=# \s
+history is not supported by this installation
+
+zubdb=# insert into dept values(10,'Accounts', 'Bengaluru');
+INSERT 0 1
+zubdb=# \s table dept
+history is not supported by this installation
+zubdb=# \s
+history is not supported by this installation
+
+zubdb=# select deptid
+zubdb-# from dept
+zubdb-# ;
+ deptid
+--------
+     10
+(1 row)
+
+
+zubdb=# insert into dept values(20,'Hiring', 'Bengaluru');
+INSERT 0 1
+zubdb=# insert into dept values(30,'Finance', 'Bengaluru');
+INSERT 0 1
+zubdb=# insert into dept values(40,'Development', 'Bengaluru');
+INSERT 0 1
+zubdb=# select * from dept;
+ deptid |    dname    |   dloc
+--------+-------------+-----------
+     10 | Accounts    | Bengaluru
+     20 | Hiring      | Bengaluru
+     30 | Finance     | Bengaluru
+     40 | Development | Bengaluru
+(4 rows)
+
+
+zubdb=# create table emp(
+zubdb(# empid int primary key not null,
+zubdb(# empname varchar(30) not null,
+zubdb(# empsal decimal(9,2),
+zubdb(# empemail varchar(40),
+zubdb(# deptid int,
+zubdb(# foreign key (deptid) references dept(deptid)
+zubdb(# );
+CREATE TABLE
+zubdb=# insert into dept values(50,'Training', 'Noida');
+INSERT 0 1
+zubdb=# insert into dept values(60,'Training', 'Gurgaon');
+INSERT 0 1
+zubdb=# insert into dept values(70,'Development', 'Noida');
+INSERT 0 1
+zubdb=# insert into emp values(1,'Harish',2300,'harish@ps.com',10);
+INSERT 0 1
+zubdb=# insert into emp values(2,'John',2400,'john@ps.com',30);
+INSERT 0 1
+zubdb=# insert into emp values(3,'Sanj',2500,'sanj@ps.com',40);
+INSERT 0 1
+zubdb=# insert into emp values(4,'Mayank',4500,'may01@ps.com',20);
+INSERT 0 1
+zubdb=# insert into emp values(5,'Zubin',5000,'zub@ps.com',30);
+INSERT 0 1
+zubdb=# select e.empname,e.empsal,e.empemail,d.dname from emp e, dept d;
+ empname | empsal  |   empemail    |    dname
+---------+---------+---------------+-------------
+ Harish  | 2300.00 | harish@ps.com | Accounts
+ John    | 2400.00 | john@ps.com   | Accounts
+ Sanj    | 2500.00 | sanj@ps.com   | Accounts
+ Mayank  | 4500.00 | may01@ps.com  | Accounts
+ Zubin   | 5000.00 | zub@ps.com    | Accounts
+ Harish  | 2300.00 | harish@ps.com | Hiring
+ John    | 2400.00 | john@ps.com   | Hiring
+ Sanj    | 2500.00 | sanj@ps.com   | Hiring
+ Mayank  | 4500.00 | may01@ps.com  | Hiring
+ Zubin   | 5000.00 | zub@ps.com    | Hiring
+ Harish  | 2300.00 | harish@ps.com | Finance
+ John    | 2400.00 | john@ps.com   | Finance
+ Sanj    | 2500.00 | sanj@ps.com   | Finance
+ Mayank  | 4500.00 | may01@ps.com  | Finance
+ Zubin   | 5000.00 | zub@ps.com    | Finance
+ Harish  | 2300.00 | harish@ps.com | Development
+ John    | 2400.00 | john@ps.com   | Development
+ Sanj    | 2500.00 | sanj@ps.com   | Development
+ Mayank  | 4500.00 | may01@ps.com  | Development
+ Zubin   | 5000.00 | zub@ps.com    | Development
+ Harish  | 2300.00 | harish@ps.com | Training
+ John    | 2400.00 | john@ps.com   | Training
+ Sanj    | 2500.00 | sanj@ps.com   | Training
+ Mayank  | 4500.00 | may01@ps.com  | Training
+ Zubin   | 5000.00 | zub@ps.com    | Training
+ Harish  | 2300.00 | harish@ps.com | Training
+ John    | 2400.00 | john@ps.com   | Training
+ Sanj    | 2500.00 | sanj@ps.com   | Training
+ Mayank  | 4500.00 | may01@ps.com  | Training
+ Zubin   | 5000.00 | zub@ps.com    | Training
+ Harish  | 2300.00 | harish@ps.com | Development
+ John    | 2400.00 | john@ps.com   | Development
+ Sanj    | 2500.00 | sanj@ps.com   | Development
+ Mayank  | 4500.00 | may01@ps.com  | Development
+ Zubin   | 5000.00 | zub@ps.com    | Development
+(35 rows)
+
+
+zubdb=# select e.empname,e.empsal,e.empemail,d.dname from emp e, dept d where d.dname = 'Accounts';
+ empname | empsal  |   empemail    |  dname
+---------+---------+---------------+----------
+ Harish  | 2300.00 | harish@ps.com | Accounts
+ John    | 2400.00 | john@ps.com   | Accounts
+ Sanj    | 2500.00 | sanj@ps.com   | Accounts
+ Mayank  | 4500.00 | may01@ps.com  | Accounts
+ Zubin   | 5000.00 | zub@ps.com    | Accounts
+(5 rows)
+
+
+zubdb=# select e.empname,e.empsal,e.empemail,d.dname from emp e, dept d where d.dname = 'Accounts' and e.deptid = d.deptid;
+ empname | empsal  |   empemail    |  dname
+---------+---------+---------------+----------
+ Harish  | 2300.00 | harish@ps.com | Accounts
+(1 row)
+
+
+zubdb=# \dt
+        List of relations
+ Schema | Name | Type  |  Owner
+--------+------+-------+----------
+ public | dept | table | postgres
+ public | emp  | table | postgres
+(2 rows)
+
+
+zubdb=# update emp set empsal=5500 where empname = 'Zubin';
+UPDATE 1
+zubdb=# select * from emp
+zubdb-# ;
+ empid | empname | empsal  |   empemail    | deptid
+-------+---------+---------+---------------+--------
+     1 | Harish  | 2300.00 | harish@ps.com |     10
+     2 | John    | 2400.00 | john@ps.com   |     30
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30
+(5 rows)
+
+
+zubdb=# select min(e.empsal), max(e.empsal), avg(e.empsal)
+zubdb-# from emp e, dept d
+zubdb-# where e.deptid = d.deptid
+zubdb-# group by d.deptid;
+   min   |   max   |          avg
+---------+---------+-----------------------
+ 2500.00 | 2500.00 | 2500.0000000000000000
+ 2300.00 | 2300.00 | 2300.0000000000000000
+ 4500.00 | 4500.00 | 4500.0000000000000000
+ 2400.00 | 5500.00 | 3950.0000000000000000
+(4 rows)
+
+
+zubdb=# select dname, min(e.empsal), max(e.empsal), avg(e.empsal)
+zubdb-# where e.deptid = d.deptid
+zubdb-# from emp e, dept d
+zubdb-# group by d.deptid;
+ERROR:  syntax error at or near "from"
+LINE 3: from emp e, dept d
+        ^
+zubdb=# select min(e.empsal), max(e.empsal), avg(e.empsal), d.dname
+zubdb-# from emp e, dept d
+zubdb-# where e.deptid = d.deptid
+zubdb-# group by d.deptid;
+   min   |   max   |          avg          |    dname
+---------+---------+-----------------------+-------------
+ 2500.00 | 2500.00 | 2500.0000000000000000 | Development
+ 2300.00 | 2300.00 | 2300.0000000000000000 | Accounts
+ 4500.00 | 4500.00 | 4500.0000000000000000 | Hiring
+ 2400.00 | 5500.00 | 3950.0000000000000000 | Finance
+(4 rows)
+
+
+zubdb=# select e.empname, e.empsal from emp e, dept d where e.empsal = min(e.empsal);
+ERROR:  aggregate functions are not allowed in WHERE
+LINE 1: ...ame, e.empsal from emp e, dept d where e.empsal = min(e.emps...
+                                                             ^
+zubdb=# select e.empname, min(e.empsal) where e.deptid = d=deptid from emp e, dept d group by d.deptid;
+ERROR:  syntax error at or near "="
+LINE 1: select e.empname, min(e.empsal) where e.deptid = d=deptid fr...
+                                                          ^
+zubdb=# select e.empname, min(e.empsal) where e.deptid = d.deptid from emp e, dept d group by d.deptid;
+ERROR:  syntax error at or near "from"
+LINE 1: ....empname, min(e.empsal) where e.deptid = d.deptid from emp e...
+                                                             ^
+zubdb=# select e.empname, min(e.empsal) from emp e, dept d where e.deptid = d.deptid group by d.deptid;
+ERROR:  column "e.empname" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select e.empname, min(e.empsal) from emp e, dept d where e.d...
+               ^
+zubdb=# select min(e.empsal), e.empname from emp e, dept d where e.deptid = d.deptid group by d.deptid;
+ERROR:  column "e.empname" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select min(e.empsal), e.empname from emp e, dept d where e.d...
+                              ^
+zubdb=# select min(e.empsal), e.empname from emp e, dept d where e.deptid = d.deptid group by e.empname;
+   min   | empname
+---------+---------
+ 4500.00 | Mayank
+ 2300.00 | Harish
+ 2500.00 | Sanj
+ 2400.00 | John
+ 5500.00 | Zubin
+(5 rows)
+
+
+zubdb=# \t dept
+unrecognized value "dept" for "tuples_only": Boolean expected
+zubdb=# dept
+zubdb-# ;
+ERROR:  syntax error at or near "dept"
+LINE 1: dept
+        ^
+zubdb=# select * from dept
+zubdb-# ;
+ deptid |    dname    |   dloc
+--------+-------------+-----------
+     10 | Accounts    | Bengaluru
+     20 | Hiring      | Bengaluru
+     30 | Finance     | Bengaluru
+     40 | Development | Bengaluru
+     50 | Training    | Noida
+     60 | Training    | Gurgaon
+     70 | Development | Noida
+(7 rows)
+
+
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid
+-------+---------+---------+---------------+--------
+     1 | Harish  | 2300.00 | harish@ps.com |     10
+     2 | John    | 2400.00 | john@ps.com   |     30
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30
+(5 rows)
+
+
+zubdb=# select e.empname from emp e, dept d where d.deptid = e.deptid group by e.empname;
+ empname
+---------
+ Mayank
+ Harish
+ Sanj
+ John
+ Zubin
+(5 rows)
+
+
+zubdb=# select e.empname from emp e, dept d where d.deptid = 30;
+ empname
+---------
+ Harish
+ John
+ Sanj
+ Mayank
+ Zubin
+(5 rows)
+
+
+zubdb=# select e.empname from emp e, dept d where d.deptid = 30 and d.deptid = e.deptid;
+ empname
+---------
+ John
+ Zubin
+(2 rows)
+
+
+zubdb=# select empname, min(empsal) from emp;
+ERROR:  column "emp.empname" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select empname, min(empsal) from emp;
+               ^
+zubdb=# select empname, min(empsal) from emp group by empname
+zubdb-# ;
+ empname |   min
+---------+---------
+ Mayank  | 4500.00
+ Harish  | 2300.00
+ Sanj    | 2500.00
+ John    | 2400.00
+ Zubin   | 5500.00
+(5 rows)
+
+
+zubdb=# select e.empname, d.dept from dept d inner join emp e on d.deptid = e.deptid group by d.dept;
+ERROR:  column d.dept does not exist
+LINE 1: select e.empname, d.dept from dept d inner join emp e on d.d...
+                          ^
+HINT:  Perhaps you meant to reference the column "d.deptid".
+zubdb=# select e.empname, d.deptid from dept d inner join emp e on d.deptid = e.deptid group by d.dept;
+ERROR:  column d.dept does not exist
+LINE 1: ...t d inner join emp e on d.deptid = e.deptid group by d.dept;
+                                                                ^
+HINT:  Perhaps you meant to reference the column "d.deptid".
+zubdb=# select e.empname, d.deptid from dept d inner join emp e on d.deptid = e.deptid group by d.deptid;
+ERROR:  column "e.empname" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select e.empname, d.deptid from dept d inner join emp e on d...
+               ^
+zubdb=# select e.empname,d.dname, d.deptid from dept d inner join emp e on d.deptid = e.deptid group by d.deptid;
+ERROR:  column "e.empname" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select e.empname,d.dname, d.deptid from dept d inner join em...
+               ^
+zubdb=# select * from dept d inner join emp e on d.deptid = e.deptid group by d.deptid;
+ERROR:  column "e.empid" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select * from dept d inner join emp e on d.deptid = e.deptid...
+               ^
+zubdb=# select dept.dname from dept inner join emp on dept.deptid = emp.deptid where emp.empname = "John"
+zubdb-# ;
+ERROR:  column "John" does not exist
+LINE 1: ...n emp on dept.deptid = emp.deptid where emp.empname = "John"
+                                                                 ^
+zubdb=# select emp.empname,dept.dname from dept inner join emp on dept.deptid = emp.deptid where emp.empname = "John"
+zubdb-# ;
+ERROR:  column "John" does not exist
+LINE 1: ...n emp on dept.deptid = emp.deptid where emp.empname = "John"
+                                                                 ^
+zubdb=# select dept.dname from dept inner join emp on dept.deptid = emp.deptid where emp.empname = 'John';
+  dname
+---------
+ Finance
+(1 row)
+
+
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid
+-------+---------+---------+---------------+--------
+     1 | Harish  | 2300.00 | harish@ps.com |     10
+     2 | John    | 2400.00 | john@ps.com   |     30
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30
+(5 rows)
+
+
+zubdb=# select * from dept
+zubdb-# ;
+ deptid |    dname    |   dloc
+--------+-------------+-----------
+     10 | Accounts    | Bengaluru
+     20 | Hiring      | Bengaluru
+     30 | Finance     | Bengaluru
+     40 | Development | Bengaluru
+     50 | Training    | Noida
+     60 | Training    | Gurgaon
+     70 | Development | Noida
+(7 rows)
+
+
+zubdb=# select * from dept where dname = (select dept.dname from dept inner join emp on dept.deptid = emp.deptid where emp.empname = 'Zubin');
+ deptid |  dname  |   dloc
+--------+---------+-----------
+     30 | Finance | Bengaluru
+(1 row)
+
+
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=#
+zubdb=# select * from dept where deptid = (select dept.dptid from dept inner join emp on dept.deptid = emp.deptid where emp.empname = 'John');
+ERROR:  column dept.dptid does not exist
+LINE 1: select * from dept where deptid = (select dept.dptid from de...
+                                                  ^
+HINT:  Perhaps you meant to reference the column "dept.deptid" or the column "dept.deptid".
+zubdb=# select * from dept where deptid = (select dept.deptid from dept inner join emp on dept.deptid = emp.deptid where emp.empname = 'John');
+ deptid |  dname  |   dloc
+--------+---------+-----------
+     30 | Finance | Bengaluru
+(1 row)
+
+
+zubdb=# select * from emp where deptid = (select dept.deptid from dept inner join emp on dept.deptid = emp.deptid where emp.empname = 'John');
+ empid | empname | empsal  |  empemail   | deptid
+-------+---------+---------+-------------+--------
+     2 | John    | 2400.00 | john@ps.com |     30
+     5 | Zubin   | 5500.00 | zub@ps.com  |     30
+(2 rows)
+
+
+zubdb=# alter table emp add column mgr integer;
+ALTER TABLE
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+(5 rows)
+
+
+zubdb=# update emp set mgr = 5 where empid = 1;
+UPDATE 1
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+(5 rows)
+
+
+zubdb=# update emp set mgr = 5 where empid = 3;
+UPDATE 1
+zubdb=# update emp set mgr = 5 where empid = 4;
+UPDATE 1
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+(5 rows)
+
+
+zubdb=# insert into emp values (6,'Matt',4000,'matt@ps.com',30);
+INSERT 0 1
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+     6 | Matt    | 4000.00 | matt@ps.com   |     30 |
+(6 rows)
+
+
+zubdb=# insert into emp values (7,'Mahesh',4200,'mahi@ps.com',40);
+INSERT 0 1
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+     6 | Matt    | 4000.00 | matt@ps.com   |     30 |
+     7 | Mahesh  | 4200.00 | mahi@ps.com   |     40 |
+(7 rows)
+
+
+zubdb=# select *
+zubdb-# from emp
+zubdb-# where mgr = 5;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+(3 rows)
+
+
+zubdb=# select * from dept
+zubdb-# ;
+ deptid |    dname    |   dloc
+--------+-------------+-----------
+     10 | Accounts    | Bengaluru
+     20 | Hiring      | Bengaluru
+     30 | Finance     | Bengaluru
+     40 | Development | Bengaluru
+     50 | Training    | Noida
+     60 | Training    | Gurgaon
+     70 | Development | Noida
+(7 rows)
+
+
+zubdb=# select d.dname
+zubdb-# from dept d
+zubdb-# where not exists (select * from emp e where d.deptid = e.deptid);
+    dname
+-------------
+ Training
+ Training
+ Development
+(3 rows)
+
+
+zubdb=# create table project(
+zubdb(# pid int primary key not null,
+zubdb(# pname varchar(30) not null,
+zubdb(# ploc varchar(30),
+zubdb(# pdept varchar(30),
+zubdb(#
+zubdb(#
+zubdb(# ;
+zubdb(#
+zubdb(# sds
+zubdb(# ^Z
+\q
+
+C:\Users\zubpayma>psql -U postgres -h localhost
+psql (10.6)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \t
+Tuples only is on.
+postgres=# \t
+Tuples only is off.
+postgres=# \dt
+Did not find any relations.
+postgres=# \st
+Invalid command \st. Try \? for help.
+postgres=# select * from dept
+postgres-# \c zubdb
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+You are now connected to database "zubdb" as user "postgres".
+zubdb-# select * from dept
+zubdb-# ;
+ERROR:  syntax error at or near "select"
+LINE 2: select * from dept
+        ^
+zubdb=# select * from dept;
+ deptid |    dname    |   dloc
+--------+-------------+-----------
+     10 | Accounts    | Bengaluru
+     20 | Hiring      | Bengaluru
+     30 | Finance     | Bengaluru
+     40 | Development | Bengaluru
+     50 | Training    | Noida
+     60 | Training    | Gurgaon
+     70 | Development | Noida
+(7 rows)
+
+
+zubdb=# create table project(
+zubdb(# pid int primary key not null,
+zubdb(# pname varchar(30) not null,
+zubdb(# ploc varchar(30),
+zubdb(# pdept int,
+zubdb(# foreign key (pdept) references dept(deptid)
+zubdb(# );
+CREATE TABLE
+zubdb=# insert into project values(1,
+zubdb(# );
+ERROR:  syntax error at or near ")"
+LINE 2: );
+        ^
+zubdb=# insert into project values(1,'P1','Bengaluru',10);
+INSERT 0 1
+zubdb=# insert into project values(2,'P2','Chennai',20);
+INSERT 0 1
+zubdb=# insert into project values(3,'P3','Mumbai',30);
+INSERT 0 1
+zubdb=# insert into project values(4,'P4','Delhi',40);
+INSERT 0 1
+zubdb=# insert into project values(5,'P5','Gurgaon',50);
+INSERT 0 1
+zubdb=# insert into project values(6,'P6','Noida',60);
+INSERT 0 1
+zubdb=# select * from project;
+ pid | pname |   ploc    | pdept
+-----+-------+-----------+-------
+   1 | P1    | Bengaluru |    10
+   2 | P2    | Chennai   |    20
+   3 | P3    | Mumbai    |    30
+   4 | P4    | Delhi     |    40
+   5 | P5    | Gurgaon   |    50
+   6 | P6    | Noida     |    60
+(6 rows)
+
+
+zubdb=# insert into project values(7,'P7','Mangalore',70);
+INSERT 0 1
+zubdb=# select * from dept
+zubdb-# ;
+ deptid |    dname    |   dloc
+--------+-------------+-----------
+     10 | Accounts    | Bengaluru
+     20 | Hiring      | Bengaluru
+     30 | Finance     | Bengaluru
+     40 | Development | Bengaluru
+     50 | Training    | Noida
+     60 | Training    | Gurgaon
+     70 | Development | Noida
+(7 rows)
+
+
+zubdb=# select * from emp;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+     6 | Matt    | 4000.00 | matt@ps.com   |     30 |
+     7 | Mahesh  | 4200.00 | mahi@ps.com   |     40 |
+(7 rows)
+
+
+zubdb=# select * from emp where empemail like '%ps%;
+zubdb'# ;
+zubdb'# select * from emp where empemail like '%ps%;
+ERROR:  syntax error at or near ";"
+LINE 3: select * from emp where empemail like '%ps%;
+                                                   ^
+zubdb=# select * from emp where empemail like '%ps%;
+zubdb'# select * from emp where empemail like '%ps%';
+zubdb'# select * from emp;
+zubdb'# ^Z
+\q
+
+C:\Users\zubpayma>psql -U postgres -h localhost
+psql (10.6)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \c zubdb
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+You are now connected to database "zubdb" as user "postgres".
+zubdb=# select * from emp where empemail like '%ps%';
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+     6 | Matt    | 4000.00 | matt@ps.com   |     30 |
+     7 | Mahesh  | 4200.00 | mahi@ps.com   |     40 |
+(7 rows)
+
+
+zubdb=# select * from emp where empemail like 'ma%';
+ empid | empname | empsal  |   empemail   | deptid | mgr
+-------+---------+---------+--------------+--------+-----
+     4 | Mayank  | 4500.00 | may01@ps.com |     20 |   5
+     6 | Matt    | 4000.00 | matt@ps.com  |     30 |
+     7 | Mahesh  | 4200.00 | mahi@ps.com  |     40 |
+(3 rows)
+
+
+zubdb=# alter table project
+zubdb-# rename pid to prjid;
+ALTER TABLE
+zubdb=# select * from project
+zubdb-# ;
+ prjid | pname |   ploc    | pdept
+-------+-------+-----------+-------
+     1 | P1    | Bengaluru |    10
+     2 | P2    | Chennai   |    20
+     3 | P3    | Mumbai    |    30
+     4 | P4    | Delhi     |    40
+     5 | P5    | Gurgaon   |    50
+     6 | P6    | Noida     |    60
+     7 | P7    | Mangalore |    70
+(7 rows)
+
+
+zubdb=# select distinct pname from project
+zubdb-# ;
+ pname
+-------
+ P2
+ P1
+ P6
+ P7
+ P4
+ P5
+ P3
+(7 rows)
+
+
+zubdb=# select distinct pname from project order by 1;
+ pname
+-------
+ P1
+ P2
+ P3
+ P4
+ P5
+ P6
+ P7
+(7 rows)
+
+
+zubdb=# alter table project alter column ploc set default 'Bengaluru';
+ALTER TABLE
+zubdb=# insert into project values(8,P8,'',10);
+ERROR:  column "p8" does not exist
+LINE 1: insert into project values(8,P8,'',10);
+                                     ^
+zubdb=# insert into project values(8,'P8','',10);
+INSERT 0 1
+zubdb=# select * from project
+zubdb-# ;
+ prjid | pname |   ploc    | pdept
+-------+-------+-----------+-------
+     1 | P1    | Bengaluru |    10
+     2 | P2    | Chennai   |    20
+     3 | P3    | Mumbai    |    30
+     4 | P4    | Delhi     |    40
+     5 | P5    | Gurgaon   |    50
+     6 | P6    | Noida     |    60
+     7 | P7    | Mangalore |    70
+     8 | P8    |           |    10
+(8 rows)
+
+
+zubdb=# delete prjid from project where prjid = 8;
+ERROR:  syntax error at or near "prjid"
+LINE 1: delete prjid from project where prjid = 8;
+               ^
+zubdb=# delete from project where prjid = 8;
+DELETE 1
+zubdb=# select * from project
+zubdb-# ;
+ prjid | pname |   ploc    | pdept
+-------+-------+-----------+-------
+     1 | P1    | Bengaluru |    10
+     2 | P2    | Chennai   |    20
+     3 | P3    | Mumbai    |    30
+     4 | P4    | Delhi     |    40
+     5 | P5    | Gurgaon   |    50
+     6 | P6    | Noida     |    60
+     7 | P7    | Mangalore |    70
+(7 rows)
+
+
+zubdb=# insert into project(prjid,pname,pdept) values(8,'P8',10);
+INSERT 0 1
+zubdb=# select * from project
+zubdb-# ;
+ prjid | pname |   ploc    | pdept
+-------+-------+-----------+-------
+     1 | P1    | Bengaluru |    10
+     2 | P2    | Chennai   |    20
+     3 | P3    | Mumbai    |    30
+     4 | P4    | Delhi     |    40
+     5 | P5    | Gurgaon   |    50
+     6 | P6    | Noida     |    60
+     7 | P7    | Mangalore |    70
+     8 | P8    | Bengaluru |    10
+(8 rows)
+
+
+zubdb=# create table emp_par(
+zubdb(# dob date,
+zubdb(# mother_maiden_name varchar(20) not null,
+zubdb(# father_name varchar(20),
+zubdb(# empid integer,
+zubdb(# foreign key (empid) references emp(empid)
+zubdb(# );
+CREATE TABLE
+zubdb=# insert into emp_par values('1998/02/28','Binaifer','Jimmy',5);
+INSERT 0 1
+zubdb=# select * from emp
+zubdb-# ;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     2 | John    | 2400.00 | john@ps.com   |     30 |
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     3 | Sanj    | 2500.00 | sanj@ps.com   |     40 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+     6 | Matt    | 4000.00 | matt@ps.com   |     30 |
+     7 | Mahesh  | 4200.00 | mahi@ps.com   |     40 |
+(7 rows)
+
+
+zubdb=# insert into emp_par values('1998/06/16','Alice','James',2);
+INSERT 0 1
+zubdb=# select * from emp_par;
+    dob     | mother_maiden_name | father_name | empid
+------------+--------------------+-------------+-------
+ 1998-02-28 | Binaifer           | Jimmy       |     5
+ 1998-06-16 | Alice              | James       |     2
+(2 rows)
+
+
+zubdb=# insert into emp_par values('1997/06/16','Mary','John',3);
+INSERT 0 1
+zubdb=# insert into emp_par values('1997/06/16','Seema','Dad',4);
+INSERT 0 1
+zubdb=# insert into emp_par values('1999/04/26','Seema','Dad',6);
+INSERT 0 1
+zubdb=# select * from emp_par;
+    dob     | mother_maiden_name | father_name | empid
+------------+--------------------+-------------+-------
+ 1998-02-28 | Binaifer           | Jimmy       |     5
+ 1998-06-16 | Alice              | James       |     2
+ 1997-06-16 | Mary               | John        |     3
+ 1997-06-16 | Seema              | Dad         |     4
+ 1999-04-26 | Seema              | Dad         |     6
+(5 rows)
+
+
+zubdb=# select concat(emp.empname, '|',emp_par.mother_maiden_name) from emp inner join emp_par on emp.empid = emp_par.empid;
+     concat
+----------------
+ Zubin|Binaifer
+ John|Alice
+ Sanj|Mary
+ Mayank|Seema
+ Matt|Seema
+(5 rows)
+
+
+zubdb=# select age(CURRENT_DATE,(select dob from emp_par));
+ERROR:  more than one row returned by a subquery used as an expression
+zubdb=# select age(CURRENT_DATE,'1998-02-28);
+zubdb'# age
+zubdb'# '
+zubdb(#
+zubdb(# ;
+zubdb(#
+zubdb(# ;;;
+zubdb(# select age(CURRENT_DATE,'1998-02-28');
+zubdb(# ;)
+zubdb-# ;
+ERROR:  syntax error at or near ";"
+LINE 4: ;
+        ^
+zubdb=# select age(CURRENT_DATE,'1998-02-28');
+          age
+------------------------
+ 21 years 11 mons 1 day
+(1 row)
+
+
+zubdb=# select date_part('day',age(current_date,dob)) from emp_par;
+ date_part
+-----------
+         1
+        13
+        13
+        13
+         3
+(5 rows)
+
+
+zubdb=# select date_trunc('day',age(current_date,dob)) from emp_par;
+       date_trunc
+-------------------------
+ 21 years 11 mons 1 day
+ 21 years 7 mons 13 days
+ 22 years 7 mons 13 days
+ 22 years 7 mons 13 days
+ 20 years 9 mons 3 days
+(5 rows)
+
+
+zubdb=# select date_trunc('day',age(current_date,dob)*365) from emp_par;
+          date_trunc
+------------------------------
+ 7999 years 7 mons 365 days
+ 7877 years 11 mons 4745 days
+ 8242 years 11 mons 4745 days
+ 8242 years 11 mons 4745 days
+ 7573 years 9 mons 1095 days
+(5 rows)
+
+
+zubdb=# select date_trunc('days',age(current_date,dob)*365) from emp_par;
+          date_trunc
+------------------------------
+ 7999 years 7 mons 365 days
+ 7877 years 11 mons 4745 days
+ 8242 years 11 mons 4745 days
+ 8242 years 11 mons 4745 days
+ 7573 years 9 mons 1095 days
+(5 rows)
+
+
+zubdb=# select date_trunc('days',age(current_date,dob)) from emp_par;
+       date_trunc
+-------------------------
+ 21 years 11 mons 1 day
+ 21 years 7 mons 13 days
+ 22 years 7 mons 13 days
+ 22 years 7 mons 13 days
+ 20 years 9 mons 3 days
+(5 rows)
+
+
+zubdb=# update foo
+zubdb-# set pname = initcap(pname);
+ERROR:  relation "foo" does not exist
+LINE 1: update foo
+               ^
+zubdb=# update dept
+zubdb-# set dname = initcap(dname);
+UPDATE 7
+zubdb=# update emp set empname = 'NO NAME' where LENGTH(empname) < 5;
+UPDATE 3
+zubdb=# select * from emp
+zubdb-# ;
+ empid | empname | empsal  |   empemail    | deptid | mgr
+-------+---------+---------+---------------+--------+-----
+     5 | Zubin   | 5500.00 | zub@ps.com    |     30 |
+     1 | Harish  | 2300.00 | harish@ps.com |     10 |   5
+     4 | Mayank  | 4500.00 | may01@ps.com  |     20 |   5
+     7 | Mahesh  | 4200.00 | mahi@ps.com   |     40 |
+     2 | NO NAME | 2400.00 | john@ps.com   |     30 |
+     3 | NO NAME | 2500.00 | sanj@ps.com   |     40 |   5
+     6 | NO NAME | 4000.00 | matt@ps.com   |     30 |
+(7 rows)
+
+
+zubdb=# select date_trunc('days',age(current_date - dob)) from emp_par;
+ERROR:  function age(integer) does not exist
+LINE 1: select date_trunc('days',age(current_date - dob)) from emp_p...
+                                 ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+zubdb=# select age(current_date MINUS dob) from emp_par;
+ERROR:  syntax error at or near "MINUS"
+LINE 1: select age(current_date MINUS dob) from emp_par;
+                                ^
+zubdb=# select age(current_date MINUS dob) from emp_par;
+ERROR:  syntax error at or near "MINUS"
+LINE 1: select age(current_date MINUS dob) from emp_par;
+                                ^
+zubdb=# select age(current_date - dob) from emp_par;
+ERROR:  function age(integer) does not exist
+LINE 1: select age(current_date - dob) from emp_par;
+               ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+zubdb=# select current_date - dob from emp_par;
+ ?column?
+----------
+     8005
+     7897
+     8262
+     8262
+     7583
+(5 rows)
+
+
+zubdb=#
