@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function Person(pid, pname){
+            this.pid=pid;
+            this.pname=pname;
+
+        var fnPrivate = function(){
+            console.log("hi i am private");
+        }
+
+        //priviliged function
+        this.callMyPrivate = function(){
+            fnPrivate();
+        }
+    }
+        Person.prototype.display = function(){
+            console.log(this.pid+", "+this.pname);
+        }
+
+        //this will not work
+        Person.prototype.callPrivate = function(){
+            this.fnPrivate();
+        }
+        
+    </script>
+</head>
+<body>
+
+    <script type="text/javascript">
+    p = new Person(101,"Harry");
+    console.log(p.pid);
+    console.log(p.pname);
+    console.log("--------------------------------------------");
+
+    p.display();
+
+    p.callMyPrivate();
+    </script>
+    
+</body>
+</html>

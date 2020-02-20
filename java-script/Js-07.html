@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type ="text/javascript">
+    function fnGetParaContent(){
+        var tag = document.getElementsByTagName("p")[0]
+        console.log(tag);
+        console.log(tag.firstChild);
+        console.log(tag.firstChild.nodeValue);
+        console.log(tag.firstChild.nodeName);
+    }
+
+    function fnGetBackgroundColor() {
+        var color = document.body.getAttribute("bgcolor");
+        console.log(color);
+    }
+
+    function fnSetBackgroundColor(color) {
+        document.body.setAttribute("bgcolor", color);
+    }
+    </script>
+</head>
+<body bgcolor="cyan">
+    <p>Hi I am para</p>
+
+    <input type="button" onclick="fnGetParaContent()" value="Click Me" />
+    <input type="button" onclick="fnGetBackgroundColor()" value="Click to get color" />
+
+    <input type="button" value="RED" onmouseover="fnSetBackgroundColor('red')" />
+    <input type="button" value="BLUE" onmouseover="fnSetBackgroundColor('blue')" />
+    <input type="button" value="GREEN" onmouseover="fnSetBackgroundColor('green')" />
+    <input type="button" value="YELLOW" onmouseover="fnSetBackgroundColor('yellow')" />
+</body>
+</html>

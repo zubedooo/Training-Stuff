@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function fnChangeTexts(){
+            __epara = document.getElementsByTagName("p") [0];
+
+                // <b></b>
+            __newPara = document.createElement("b");
+            __textnode = document.createTextNode("This is from Script");
+            // <b>This is from Script</b>
+            __newPara.appendChild(__textnode);
+
+            //document.body.replaceChild(__newPara, __epara);
+            //document.body.append(__newPara);
+            document.body.insertBefore(__newPara, __epara);
+
+
+        }
+    </script>
+</head>
+<body>
+    <p>I AM FROM BODY TAG</p>
+
+    <input type="button" onclick="fnChangeTexts()" value="Click Me" />
+</body>
+</html>

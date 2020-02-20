@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type ="text/javascript">
+        function fnArray1(){
+            arr = new Array(4);
+            
+            arr[0] = 10;
+            arr[1] = 20;
+            arr[2] = 30;
+            arr[3] = 40;
+            
+            console.log(arr);
+            console.log(arr.length);
+        } 
+        
+        function fnArray2(){
+            arr = new Array(4);
+            
+            arr[0] = 10;
+            arr[1] = true;
+            arr[2] = "Hello";
+            arr[3] = 23.4;
+            
+            console.log(arr);
+            console.log(arr.length);
+        }
+        
+        function fnArray3(){
+            weeks = new Array("Mon", "Tue", "Wed", "Thur", "Fri");
+
+            console.log(weeks);
+            weeks.shift()
+            console.log(weeks);
+
+            weeks.unshift("MONDAY")
+            console.log(weeks);
+
+            weeks.pop();
+            console.log(weeks);
+
+            weeks.push("FRIDAY");
+            console.log(weeks);
+
+            //splice (arg1 - position)
+            //splice (arg1 - position, arg2 - no. of elements to be deleted)
+
+            weeks.splice(2,1);
+            console.log(weeks);
+
+
+            //splice (arg1 - position, arg2 - no. of elements to be deleted, arg3 - no. of elements to be added )
+
+            weeks.splice(2,0, "HELLO", "HOW", "ARE", "YOU");
+            console.log(weeks);
+
+
+
+            //using for loop
+
+            for(var x in weeks){
+                console.log(weeks[x]);
+            }
+
+
+
+
+
+        }
+    </script>
+</head>
+<body>
+    <input type="button" onclick="fnArray1()" value="Function 1">
+    <input type="button" onclick="fnArray2()" value="Function 2">
+    <input type="button" onclick="fnArray3()" value="Function 3">
+</body>
+</html>

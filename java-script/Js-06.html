@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js-06.html</title>
+
+    <script type="text/javascript">
+    function display(){
+        console.log("Called display with no arg");
+        var noOfArgs = display.arguments.length;
+        console.log("No. of args: " + noOfArgs);
+
+        for(x in display.arguments){
+            console.log(display.arguments[x]);
+        }
+    }
+
+    </script>
+</head>
+<body>
+    <script type="text/javascript">
+    display();
+    display(10,20);
+    display("hi", "how", "are", "you");
+
+    
+    </script>
+</body>
+</html>
