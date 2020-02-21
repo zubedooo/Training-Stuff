@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>JavaScript Patterns</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<script>
+            
+			var MODULE = {}
+			var MODULE = (function (my) {
+				my.anotherMethod = function () {
+                    console.log("Hi I am in function");
+				};
+
+				return my;
+            }(MODULE));
+            
+            MODULE.anotherMethod();
+
+		</script>
+</html>

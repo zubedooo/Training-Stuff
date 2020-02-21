@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function fnGetJsonFromServer(){
+            var URL = "https://jsonplaceholder.typicode.com/posts/1/comments";
+
+            var xmlhttp= new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function(){
+                // 4 is that the data has got from the server ready to render in the client window
+                // 200 is the server has said OK
+                if(this.readyState==4 && this.status == 200){
+                    var myArray = JSON.parse(this.responseText);
+                    render(myArray);
+                }
+            }
+
+            xmlhttp.open("GET",URL,true);
+            xmlhttp.send();
+        }
+
+        function render(myData){
+            for(x in myData){
+                console.log(myData[x].name +", "+ myData[x].email);       
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="Click to GET" onclick="fnGetJsonFromServer()">
+</body>
+</html>

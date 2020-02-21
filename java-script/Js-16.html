@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- call and apply-->
+
+    <script type="text/javascript">
+        function fnCallApply(){
+            var emp = {
+                firstName:"Naveen",
+                lastName:"Kumar"
+            };
+            var emp1={
+                firstName:"Saahil",
+                lastName:"Jain"
+            };
+
+            var render = {
+                displayInUpperCase: function(){
+                    return this.firstName.toUpperCase()+", "+
+                            this.lastName.toUpperCase();
+                },
+
+                displayWithEmail: function(email){
+                    return this.firstName+", "+
+                            this.lastName+", "+ email;
+                }
+            }
+
+            console.log(render.displayInUpperCase.call(emp));   
+            console.log(render.displayInUpperCase.call(emp1));
+
+            console.log(render.displayWithEmail.call(emp, "naveen@probits.in"));
+
+            // only difference here is it takes the parameters as an array
+            console.log(render.displayWithEmail.apply(emp, ["naveen@probits.in"])); 
+        }
+    </script>
+</head>
+<body onload="fnCallApply()">
+    <h1>Working with call and apply</h1>
+    
+</body>
+</html>

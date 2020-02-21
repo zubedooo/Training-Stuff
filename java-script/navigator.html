@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function ask(){
+            var arr = new Array("mickey.png", "minnie.jpg", "talespin.jpg")
+            var imageNo = prompt("Enter a number 0-2");
+            if(imageNo.match(/[0-2]/)== imageNo){
+                change(arr[imageNo]);
+            }else{
+                alert("sorry invalid input");
+            }
+        }
+    
+        function change(imageName){
+            parent.f2.location.href="./images/"+imageName;
+        }
+    
+    </script>
+</head>
+<body onload="ask()" onclick="ask()">
+    <h1>click to load image</h1>
+    
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function fnRegEx(){
+            var octVal = prompt("Enter octal value");
+            var regEx = /0[0-7]+/;
+            console.log(octVal.match(regEx));
+            
+        }
+    
+
+        function fnCheckIPAddress(){
+            var ipAddress= "192.168.3.123";
+            var ipAddressValidator = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/;
+
+            if(ipAddress.match(ipAddressValidator) == ipAddress){
+            console.log("Entered IP is correct");
+            }
+
+            else{
+                console.log("Entered IP is incorrect");
+                
+            }
+            
+            
+        }
+        function fnCheckEmailAddress(){
+            var EmailAddress= "zubinpaymaster@yahoo.co.in";
+            var EmailAddressValidator = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+            if(EmailAddress.match(EmailAddressValidator) == EmailAddress){
+            console.log("Entered Email is correct");
+            }
+
+            else{
+                console.log("Entered Email is incorrect");
+                
+            }
+            
+            
+        }
+    
+    </script>
+</head>
+<body>
+    <input type="button" value="RegEx" onclick="fnRegEx()" />
+    <input type="button" value="ipAddressValidator" onclick="fnCheckIPAddress()" />
+    <input type="button" value="EmailAddressValidator" onclick="fnCheckEmailAddress()" />
+</body>
+</html>

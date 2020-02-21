@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+    // this is not supported anymore LOL
+        function setStatus(message){
+            status = message;
+        }
+        
+        //function to show setTimeOut which calls itself
+        //with the delay of 1000 milliseconds
+        function showTime(){
+            var today = new Date();
+            var hours = today.getHours();
+            var minutes = today.getMinutes();
+            var seconds = today. getSeconds();
+
+            document.getElementById("myDiv").innerHTML = hours +":" +minutes +":" + seconds;
+
+            setTimeout("showTime()", 1000);
+        }
+    </script>
+</head>
+<body onload="defaultStatus='Welcome to my page' ; showTime()"
+      onblur="setStatus('You are out')"
+      onfocus="setStatus('You are in')">
+
+      <h2>CLOCK </h2>
+
+      <div id="myDiv">
+    
+</body>
+</html>

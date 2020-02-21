@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+        function fnStrOpr(){
+            var str1 = "Hello";
+            var str2 = "Bengaluru";
+
+            console.log("Length of str1 is: "+ str1.length);
+            console.log("Lowercase of str1 is: "+ str1.toLowerCase());
+            console.log("Uppercase of str1 is: "+ str1.toUpperCase());
+
+            //if the value is not found, it will return -1
+            console.log("start -> u is found " + str2 + " @ " + str2.indexOf("u") +" position");
+            console.log("last -> u is found " + str2 + " @ " + str2.lastIndexOf("u") +" position");
+
+            //substring
+            console.log("substring 2,6(str2) -> " + str2.substring(2,6));
+            console.log("substr 2,6(str2) -> " + str2.substr(2,6));
+
+            //slice
+            console.log("Bengaluru slice 3,5: " + str2.slice(3,5));
+
+            //to char code
+            console.log('a'.charCodeAt()); //97
+
+            console.log(String.fromCharCode(65,66,67));
+            console.log("hello:how:are:you:today".split(":"));
+        }
+        function fnHTMLTags(){
+            document.write("Part2".anchor("p2"));
+            document.write("Welcome".big());
+            document.write("Hello".bold());
+            document.write("sky".italics());
+            document.write("Yahoo".link("www.yahoo.com"));
+            document.write("Rights reserved".small());
+            document.write("strike".strike());
+            document.write("h"+"2".sub()+"o");
+            document.write("E=MC"+"2".sup());
+        }
+    </script>
+</head>
+<body>
+    <input type="button" onclick="fnStrOpr()" value="String Ops" />
+    <input type="button" onclick="fnHTMLTags()" value="HTMLTags" />
+</body>
+</html>
